@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paper Cut Art Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        }
+
+        :root {
+            --cream: #fbf7f1;
+            --light-warm: #f3ece3;
+            --latte: #d9c9b8;
+            --latte-strong: #b9a590;
+            --brown: #5a4a42;
+            --brown-soft: #7d6b62;
+            --dusty-rose: #b5837a;
+            --dusty-rose-strong: #96665e;
+            --card-bg: #ffffff;
+            --border: #ece3d7;
+        }
+
+        body {
+            background-color: var(--cream);
+            color: var(--brown);
+            background-image:
+                radial-gradient(circle at 15% 5%, rgba(217, 201, 184, 0.45) 0, transparent 28%),
+                radial-gradient(circle at 85% 12%, rgba(181, 131, 122, 0.18) 0, transparent 24%),
+                radial-gradient(circle at 8% 85%, rgba(217, 201, 184, 0.35) 0, transparent 26%),
+                radial-gradient(circle at 92% 92%, rgba(181, 131, 122, 0.15) 0, transparent 22%);
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='70' height='70' viewBox='0 0 70 70'><text x='8' y='22' font-size='11' fill='%23c9b59f' opacity='0.45'>✿</text></svg>"),
+                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'><text x='52' y='76' font-size='12' fill='%23b9a590' opacity='0.38'>✦</text></svg>");
+            background-size: 70px, 90px;
+            background-repeat: repeat;
+            opacity: 0.4;
+            z-index: 0;
+        }
+
+        /* 小人裝飾：全部內嵌SVG，不依賴外部圖片 */
+        .mascot {
+            position: absolute;
+            width: 52px;
+            height: auto;
+            z-index: 2;
+            pointer-events: none;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.12));
+        }
+
+        .m1 { top: 18px; left: 4%; transform: rotate(-10deg); }
+        .m2 { top: 14px; right: 4%; transform: rotate(8deg); }
+        .m3 { top: 120px; left: -6px; }
+        .m4 { top: 180px; right: -4px; }
+        .m5 { top: 300px; left: 2%; }
+        .m6 { top: 420px; right: 2%; }
+        .m7 { bottom: 160px; left: 4%; }
+        .m8 { bottom: 100px; right: 4%; }
+        .m9 { bottom: 24px; left: 14%; }
+
+        .container, header, nav, section, footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            background: linear-gradient(135deg, #f3ece3 0%, #e7d9c8 100%);
+            color: var(--brown);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-bottom: 3px dashed var(--latte);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header h1 {
+            font-size: 2.4rem;
+            margin-bottom: 0.6rem;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 0 #fff;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.85;
+            font-style: italic;
+        }
+
+        nav {
+            background: #f6f0e7;
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 2px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        nav a {
+            color: var(--brown);
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--dusty-rose-strong);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--brown);
+            position: relative;
+            width: 100%;
+        }
+
+        .section-title::before,
+        .section-title::after {
+            content: "✿";
+            position: relative;
+            margin: 0 12px;
+            color: var(--dusty-rose);
+            font-size: 1.4rem;
+            vertical-align: middle;
+        }
+
+        .filter-wrap {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.3rem;
+            margin: 0 0.3rem 0.4rem;
+            border: 2px solid var(--border);
+            border-radius: 999px;
+            background: #fff;
+            color: var(--brown);
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--latte-strong);
+            color: var(--dusty-rose-strong);
+        }
+
+        .filter-btn.active {
+            background: var(--latte);
+            color: #fff;
+            border-color: var(--latte);
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .work-card {
+            background: var(--card-bg);
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(120, 90, 70, 0.12);
+            transition: 0.35s;
+            border: 2px solid var(--border);
+            position: relative;
+        }
+
+        .work-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px rgba(120, 90, 70, 0.18);
+        }
+
+        .work-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            cursor: pointer;
+            border-bottom: 3px dashed var(--latte);
+        }
+
+        .work-info {
+            padding: 1.4rem;
+        }
+
+        .work-info h3 {
+            margin-bottom: 0.4rem;
+            color: var(--brown);
+        }
+
+        .price {
+            color: var(--dusty-rose-strong);
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 0.6rem 0;
+        }
+
+        .desc {
+            font-size: 0.9rem;
+            color: var(--brown-soft);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #c9a59b 0%, #96665e 100%);
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: 0.3s;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(150, 102, 94, 0.25);
+        }
+
+        #cart, #checkout, #faq {
+            background: #fff;
+            border-radius: 22px;
+            padding: 2rem;
+            box-shadow: 0 6px 18px rgba(120, 90, 70, 0.12);
+            border: 2px solid var(--border);
+        }
+
+        #cart {
+            margin: 4rem 0;
+        }
+
+        .cart-item {
+            padding: 0.7rem 0;
+            border-bottom: 1px dashed var(--border);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-item {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.4rem;
+            color: var(--brown);
+            font-weight: 500;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--cream);
+            color: var(--brown);
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--latte-strong);
+            box-shadow: 0 0 0 3px rgba(185, 165, 144, 0.25);
+        }
+
+        .payment-info {
+            margin-top: 1.2rem;
+            padding: 1.3rem;
+            background: var(--light-warm);
+            border-radius: 16px;
+            border-left: 4px solid var(--dusty-rose);
+            display: none;
+        }
+
+        .faq-item {
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .faq-question {
+            padding: 1rem 0;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question::after {
+            content: "+";
+            font-size: 1.4rem;
+            color: var(--dusty-rose);
+            transition: 0.3s;
+        }
+
+        .faq-question.open::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 0 1rem;
+            color: var(--brown-soft);
+            display: none;
+            line-height: 1.6;
+        }
+
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(40, 30, 25, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 88vh;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 24px;
+            right: 30px;
+            color: #fff;
+            font-size: 2.4rem;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f3ece3 0%, #e7d9c8 100%);
+            color: var(--brown);
+            margin-top: 3rem;
+            border-top: 3px dashed var(--latte);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.9rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .mascot {
+                width: 42px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 9個小人裝飾：全部內嵌SVG，打開即顯示 -->
+    <div class="mascot m1">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="50" cy="75" rx="18" ry="10" fill="#e8d5c4"/>
+            <circle cx="50" cy="42" r="26" fill="#2c2c2c"/>
+            <path d="M28 30 Q32 18 50 16 Q68 18 72 30" fill="#2c2c2c"/>
+            <circle cx="40" cy="44" r="5" fill="#fff"/>
+            <circle cx="60" cy="44" r="5" fill="#fff"/>
+            <circle cx="41" cy="45" r="2.5" fill="#111"/>
+            <circle cx="61" cy="45" r="2.5" fill="#111"/>
+            <path d="M44 54 Q50 58 56 54" stroke="#111" stroke-width="1.5" fill="none"/>
+            <circle cx="30" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
+            <circle cx="70" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
+            <path d="M34 70 L32 88 L42 90 L46 74 Z" fill="#3f5aa8"/>
+            <path d="M66 70 L68 88 L58 90 L54 74 Z" fill="#3f5aa8"/>
+            <circle cx="32" cy="90" r="4" fill="#2c2c2c"/>
+            <circle cx="68" cy="90" r="4" fill="#2c2c2c"/>
+        </svg>
+    </div>
+
+    <div class="mascot m2">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="50" cy="75" rx="18" ry="10" fill="#e8d5c4"/>
+            <circle cx="50" cy="42" r="26" fill="#2c2c2c"/>
+            <path d="M26 36 Q34 20 50 18 Q66 20 74 36" fill="#2c2c2c"/>
+            <path d="M20 40 Q26 30 34 34" stroke="#2c2c2c" stroke-width="4" fill="none"/>
+            <path d="M80 40 Q74 30 66 34" stroke="#2c2c2c" stroke-width="4" fill="none"/>
+            <circle cx="40" cy="44" r="5" fill="#fff"/>
+            <circle cx="60" cy="44" r="5" fill="#fff"/>
+            <circle cx="41" cy="45" r="2.5" fill="#111"/>
+            <circle cx="61" cy="45" r="2.5" fill="#111"/>
+            <path d="M44 54 Q50 58 56 54" stroke="#111" stroke-width="1.5" fill="none"/>
+            <circle cx="30" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
+            <circle cx="70" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
+            <path d="M34 70 L32 88 L42 90 L46 74 Z" fill="#2f2f2f"/>
+            <path d="M66 70 L68 88 L58 90 L54 74 Z" fill="#2f2f2f"/>
+            <circle cx="32" cy="90" r="4" fill="#2c2c2c"/>
+            <circle cx="68" cy="90" r="4" fill="#2c2c2c"/>
+        </svg>
+    </div>
+
+    <div class="mascot m3">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="50" cy="75" rx="18" ry="10" fill="#e8d5c4"/>
+            <circle cx="50" cy="42" r="26" fill="#e6d77a"/>
+            <path d="M28 32 Q34 18 50 16 Q66 18 72 32" fill="#e6d77a"/>
+            <circle cx="40" cy="44" r="5" fill="#fff"/>
+            <circle cx="60" cy="44" r="5" fill="#fff"/>
+            <circle cx="41" cy="45" r="2.5" fill="#111"/>
+            <circle cx="61" cy="45" r="2.5" fill="#111"/>
+            <path d="M44 54 Q50 58 56 54" stroke="#111" stroke-width="1.5" fill="none"/>
+            <circle cx="30" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
+            <circle cx="70" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
+            <path d="M34 70 L32 88 L42 90 L46 74 Z" fill="#7faadf"/>
+            <path d="M66 70 L68 88 L58 90 L54 74 Z" fill="#7faadf"/>
+            <circle cx="32" cy="90" r="4" fill="#2c2c2c"/>
+            <circle cx="68" cy="90" r="4" fill="#2c2c2c"/>
+        </svg>
+    </div>
+
+    <div class="mascot m4">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="50" cy="75" rx="18" ry="10" fill="#e8d5c4"/>
+            <circle cx="50" cy="42" r="26" fill="#2c2c2c"/>
+            <path d="M28 30 Q34 18 50 16 Q66 18 72 30" fill="#2c2c2c"/>
+            <path d="M20 50 Q14 60 20 70" stroke="#2c2c2c" stroke-width="5" fill="none"/>
+            <path d="M80 50 Q86 60 80 70" stroke="#2c2c2c" stroke-width="5" fill="none"/>
+            <circle cx="40" cy="44" r="5" fill="#fff"/>
+            <circle cx="60" cy="44" r="5" fill="#fff"/>
+            <circle cx="41" cy="45" r="2.5" fill="#111"/>
+            <circle cx="61" cy="45" r="2.5" fill="#111"/>
+            <path d="M44 54 Q50 58 56 54" stroke="#111" stroke-width="1.5" fill="none"/>
+            <circle cx="30" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
+            <circle cx="70" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
+            <path d="M34 70 L32 88 L42 90 L46 74 Z" fill="#d66868"/>
+            <path d="M66 70 L68 88 L58 90 L54 74 Z" fill="#d66868"/>
+            <circle cx="32" cy="90" r="4" fill="#2c2c2c"/>
+            <circle cx="68" cy="90" r="4" fill="#2c2c2c"/>
+        </svg>
+    </div>
+
+    <div class="mascot m5">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="50" cy="75" rx="18" ry="10" fill="#e8d5c4"/>
+            <circle cx="50" cy="42" r="26" fill="#2c2c2c"/>
+            <path d="M28 32 Q34 20 50 18 Q66 20 72 32" fill="#2c2c2c"/>
+            <circle cx="40" cy="44" r="5" fill="#fff"/>
+            <circle cx="60" cy="44" r="5" fill="#fff"/>
+            <circle cx="41" cy="45" r="2.5" fill="#111"/>
+            <circle cx="61" cy="45" r="2.5" fill="#111"/>
+            <path d="M44 54 Q50 58 56 54" stroke="#111" stroke-width="1.5" fill="none"/>
+            <circle cx="30" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
+            <circle cx="70" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
+            <path d="M34 70 L32 88 L42 90 L46 74 Z" fill="#6a8f4e"/>
+            <path d="M66 70 L68 88 L58 90 L54 74 Z" fill="#6a8f4e"/>
+            <circle cx="32" cy="90" r="4" fill="#2c2c2c"/>
+            <circle cx="68" cy="90" r="4" fill="#2c2c2c"/>
+        </svg>
+    </div>
+
+    <div class="mascot m6">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="50" cy="75" rx="18" ry="10" fill="#e8d5c4"/>
+            <circle cx="50" cy="42" r="26" fill="#6b4a3b"/>
+            <path d="M28 30 Q34 18 50 16 Q66 18 72 30" fill="#6b4a3b"/>
+            <circle cx="40" cy="44" r="5" fill="#fff"/>
+            <circle cx="60" cy="44" r="5" fill="#fff"/>
+            <circle cx="41" cy="45" r="2.5" fill="#111"/>
+            <circle cx="61" cy="45" r="2.5" fill="#111"/>
+            <path d="M44 54 Q50 58 56 54" stroke="#111" stroke-width="1.5" fill="none"/>
+            <circle cx="30" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
+            <circle cx="70" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
+            <path d="M34 70 L32 88 L42 90 L46 74 Z" fill="#8f6b4a"/>
+            <path d="M66 70 L68 88 L58 90 L54 74 Z" fill="#8f6b4a"/>
+            <circle cx="32" cy="90" r="4" fill="#2c2c2c"/>
+            <circle cx="68" cy="90" r="4" fill="#2c2c2c"/>
+        </svg>
+    </div>
+
+    <div class="mascot m7">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="50" cy="75" rx="18" ry="10" fill="#e8d5c4"/>
+            <circle cx="50" cy="42" r="26" fill="#2c2c2c"/>
+            <path d="M28 32 Q34 20 50 18 Q66 20 72 32" fill="#2c2c2c"/>
+            <circle cx="40" cy="44" r="5" fill="#fff"/>
+            <circle cx="60" cy="44" r="5" fill="#fff"/>
+            <circle cx="41" cy="45" r="2.5" fill="#111"/>
+            <circle cx="61" cy="45" r="2.5" fill="#111"/>
+            <path d="M44 54 Q50 58 56 54" stroke="#111" stroke-width="1.5" fill="none"/>
+            <circle cx="30" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
+            <circle cx="70" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
+            <path d="M34 70 L32 88 L42 90 L46 74 Z" fill="#b0a0d6"/>
+            <path d="M66 70 L68 88 L58 90 L54 74 Z" fill="#b0a0d6"/>
+            <circle cx="32" cy="90" r="4" fill="#2c2c2c"/>
+            <circle cx="68" cy="90" r="4" fill="#2c2c2c"/>
+        </svg>
+    </div>
+
+    <div class="mascot m8">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="50" cy="75" rx="18" ry="10" fill="#e8d5c4"/>
+            <circle cx="50" cy="42" r="26" fill="#c98a4b"/>
+            <path d="M28 30 Q34 18 50 16 Q66 18 72 30" fill="#c98a4b"/>
+            <circle cx="40" cy="44" r="5" fill="#fff"/>
+            <circle cx="60" cy="44" r="5" fill="#fff"/>
+            <circle cx="41" cy="45" r="2.5" fill="#111"/>
+            <circle cx="61" cy="45" r="2.5" fill="#111"/>
+            <path d="M44 54 Q50 58 56 54" stroke="#111" stroke-width="1.5" fill="none"/>
+            <circle cx="30" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
+            <circle cx="70" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
+            <path d="M34 70 L32 88 L42 90 L46 74 Z" fill="#e7c47a"/>
+            <path d="M66 70 L68 88 L58 90 L54 74 Z" fill="#e7c47a"/>
+            <circle cx="32" cy="90" r="4" fill="#2c2c2c"/>
+            <circle cx="68" cy="90" r="4" fill="#2c2c2c"/>
+        </svg>
+    </div>
+
+    <div class="mascot m9">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="50" cy="78" rx="16" ry="8" fill="#e8d5c4"/>
+            <circle cx="50" cy="40" r="24" fill="#2c2c2c"/>
+            <path d="M28 28 Q34 18 50 16 Q66 18 72 28" fill="#2c2c2c"/>
+            <circle cx="40" cy="42" r="5" fill="#fff"/>
+            <circle cx="60" cy="42" r="5" fill="#fff"/>
+            <circle cx="41" cy="43" r="2.5" fill="#111"/>
+            <circle cx="61" cy="43" r="2.5" fill="#111"/>
+            <path d="M44 52 Q50 56 56 52" stroke="#111" stroke-width="1.5" fill="none"/>
+            <circle cx="30" cy="50" r="3" fill="#f3c6c6" opacity="0.7"/>
+            <circle cx="70" cy="50" r="3" fill="#f3c6c6" opacity="0.7"/>
+            <path d="M34 68 L32 88 L42 90 L46 72 Z" fill="#9db4e0"/>
+            <path d="M66 68 L68 88 L58 90 L54 72 Z" fill="#9db4e0"/>
+            <circle cx="32" cy="90" r="4" fill="#2c2c2c"/>
+            <circle cx="68" cy="90" r="4" fill="#2c2c2c"/>
+        </svg>
+    </div>
+
+    <header>
+        <h1>Paper Cut Art</h1>
+        <p>Handcrafted Paper Creations | Artworks by our students</p>
+    </header>
+
+    <nav>
+        <a href="#works">Artworks</a>
+        <a href="#cart">Cart</a>
+        <a href="#checkout">Checkout</a>
+        <a href="#faq">FAQ</a>
+    </nav>
+
+    <div class="container">
+        <section id="works">
+            <h2 class="section-title">Artwork Gallery</h2>
+
+            <div class="filter-wrap">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="original">Original Art</button>
+                <button class="filter-btn" data-filter="print">Art Print</button>
+                <button class="filter-btn" data-filter="commission">Custom Commission</button>
+            </div>
+
+            <div class="works-grid">
+                <div class="work-card" data-category="original">
+                    <img class="work-img" src="https://picsum.photos/id/237/600/400" alt="Forest Paper Cut">
+                    <div class="work-info">
+                        <h3>Forest Dream</h3>
+                        <p class="desc">Hand-cut layered paper art. Framed original piece, one of a kind.</p>
+                        <p class="price">HK$ 380</p>
+                        <button class="btn add-cart" data-name="Forest Dream" data-price="380">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="work-card" data-category="original">
+                    <img class="work-img" src="https://picsum.photos/id/10/600/400" alt="City Paper Cut">
+                    <div class="work-info">
+                        <h3>Night City</h3>
+                        <p class="desc">Multi-layer paper cut artwork. Includes custom shadow box frame.</p>
+                        <p class="price">HK$ 450</p>
+                        <button class="btn add-cart" data-name="Night City" data-price="450">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="work-card" data-category="print">
+                    <img class="work-img" src="https://picsum.photos/id/15/600/400" alt="Flora Paper Cut">
+                    <div class="work-info">
+                        <h3>Wild Flora Print</h3>
+                        <p class="desc">High quality print of botanical paper cut. Signed limited edition.</p>
+                        <p class="price">HK$ 180</p>
+                        <button class="btn add-cart" data-name="Wild Flora Print" data-price="180">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="work-card" data-category="commission">
+                    <img class="work-img" src="https://picsum.photos/id/24/600/400" alt="Custom Paper Cut">
+                    <div class="work-info">
+                        <h3>Custom Paper Cut Commission</h3>
+                        <p class="desc">Personalised handmade paper cut. Price depends on complexity & size.</p>
+                        <p class="price">HK$ 800 starting</p>
+                        <button class="btn add-cart" data-name="Custom Paper Cut Commission" data-price="800">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cart">
+            <h2 class="section-title">Shopping Cart</h2>
+            <div id="cart-list"></div>
+            <p style="margin-top:1rem;"><strong>Total: HK$ <span id="total-price">0</span></strong></p>
+            <button class="btn" onclick="clearCart()" style="width:auto; margin-top:1rem;">Clear Cart</button>
+        </section>
+
+        <section id="checkout">
+            <h2 class="section-title">Place Your Order</h2>
+
+            <form id="order-form" action="https://formspree.io/f/xxxxxx" method="POST">
+                <div class="form-item">
+                    <label>Full Name</label>
+                    <input type="text" name="name" required>
+                </div>
+
+                <div class="form-item">
+                    <label>Email / Telegram</label>
+                    <input type="text" name="contact" required>
+                </div>
+
+                <div class="form-item">
+                    <label>Shipping Address</label>
+                    <textarea rows="3" name="address"></textarea>
+                </div>
+
+                <div class="form-item">
+                    <label>Notes (Special requests)</label>
+                    <textarea rows="3" name="note"></textarea>
+                </div>
+
+                <input type="hidden" id="cart-data" name="cart">
+                <input type="hidden" id="cart-total" name="total">
+
+                <button type="submit" class="btn">Submit Order</button>
+            </form>
+
+            <div class="payment-info" id="paymentPanel">
+                <h3 style="margin-bottom:0.6rem;">Order Submitted. Please Complete Payment</h3>
+                <p>Please settle payment via <strong>PayMe or FPS (HK)</strong>.</p>
+                <br>
+                <p><strong>PayMe:</strong> your-payme-here</p>
+                <p><strong>FPS ID:</strong> 12345678</p>
+                <p style="margin-top:0.8rem;">After payment, please send your transaction screenshot to us via email or Telegram for verification.</p>
+                <p>We will arrange shipment once payment is confirmed.</p>
+            </div>
+        </section>
+
+        <section id="faq">
+            <h2 class="section-title">FAQ</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">What is the delivery time?</div>
+                <div class="faq-answer">Original paper cut artworks usually take 7–14 working days to finish. Prints will be shipped within 3–5 working days after payment is confirmed. Custom commissions will have a separate timeline agreed before starting.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How much is shipping?</div>
+                <div class="faq-answer">Local Hong Kong shipping: HK$30. International shipping will be calculated based on destination and package weight, and quoted after the order is placed.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I request a custom paper cut commission?</div>
+                <div class="faq-answer">Yes. Please describe your idea, size, and preferred elements in the order note. Our student artists will reply with details, a quotation, and a timeline.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Return & Refund Policy</div>
+                <div class="faq-answer">Original handmade paper cuts are non-refundable unless damaged during delivery. Please provide photo proof within 3 days after receiving the parcel.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Payment methods</div>
+                <div class="faq-answer">We accept PayMe and FPS (Hong Kong). Payment details will be shown after you submit your order.</div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2026 Paper Cut Art | Artworks created by students of our girls’ school. All artworks are original. Copyright reserved.</p>
+    </footer>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="Artwork preview">
+    </div>
+
+    <script>
+        let cart = [];
+        const cartListEl = document.getElementById('cart-list');
+        const totalPriceEl = document.getElementById('total-price');
+        const paymentPanel = document.getElementById("paymentPanel");
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImg = document.getElementById("lightbox-img");
+
+        document.querySelectorAll('.work-img').forEach(img => {
+            img.addEventListener('click', function () {
+                lightboxImg.src = this.src;
+                lightbox.style.display = "flex";
+            });
+        });
+
+        document.querySelector('.lightbox-close').addEventListener('click', () => {
+            lightbox.style.display = "none";
+        });
+
+        lightbox.addEventListener('click', function (e) {
+            if (e.target === lightbox) lightbox.style.display = "none";
+        });
+
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.work-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filterVal = btn.dataset.filter;
+                cards.forEach(card => {
+                    card.style.display = (filterVal === 'all' || card.dataset.category === filterVal)
+                        ? "block"
+                        : "none";
+                });
+            });
+        });
+
+        document.querySelectorAll('.add-cart').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const name = btn.dataset.name;
+                const price = Number(btn.dataset.price);
+                cart.push({ name, price });
+                renderCart();
+                alert(`${name} added to cart`);
+            });
+        });
+
+        function renderCart() {
+            cartListEl.innerHTML = "";
+            let total = 0;
+
+            cart.forEach(item => {
+                total += item.price;
+                const div = document.createElement('div');
+                div.className = "cart-item";
+                div.innerHTML = `<span>${item.name}</span><span>HK$ ${item.price}</span>`;
+                cartListEl.appendChild(div);
+            });
+
+            totalPriceEl.innerText = total;
+            document.getElementById("cart-data").value = JSON.stringify(cart);
+            document.getElementById("cart-total").value = total;
+        }
+
+        function clearCart() {
+            cart = [];
+            renderCart();
+        }
+
+        document.getElementById('order-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const form = this;
+
+            fetch(form.action, {
+                method: form.method,
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                if (response.ok) {
+                    paymentPanel.style.display = "block";
+                    form.reset();
+                    clearCart();
+                }
+            }).catch(() => {
+                alert("Order failed. Please try again or contact us directly.");
+            });
+        });
+
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                q.classList.toggle('open');
+                q.nextElementSibling.style.display =
+                    q.nextElementSibling.style.display === "block" ? "none" : "block";
+            });
+        });
+    </script>
+</body>
+</html>
