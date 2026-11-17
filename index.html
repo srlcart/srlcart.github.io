@@ -94,7 +94,6 @@ document.getElementById("global-back").onclick = function(){
   }
 }
 function pushPage(pageId){
-  // ✅ 重點：如果而家已經係呢個頁面，直接重新載資料，唔推堆疊
   const activePage = document.querySelector(".page.active").id;
   if(activePage === pageId){
     if(pageId === "page-your-stall") loadStallSetting();
@@ -193,15 +192,17 @@ function buildAvatarSVG(skin, cloth, hairStyle, clothStyle){
     </svg>
   `;
 }
+
+// ✅ 全部改用 innerHTML，容器 ID 保留唔刪走
 function renderVisitorHomeAvatar(){
-  document.getElementById("visitor-home-avatar").outerHTML = buildAvatarSVG(currentUser.skin, currentUser.cloth, currentUser.hairStyle, currentUser.clothStyle);
+  document.getElementById("visitor-home-avatar").innerHTML = buildAvatarSVG(currentUser.skin, currentUser.cloth, currentUser.hairStyle, currentUser.clothStyle);
 }
 function changeAvatar(){
   const sk = document.getElementById("color-skin").value;
   const cl = document.getElementById("color-cloth").value;
   const hs = document.getElementById("hair-style").value;
   const cs = document.getElementById("cloth-style").value;
-  document.getElementById("my-avatar").outerHTML = buildAvatarSVG(sk, cl, hs, cs);
+  document.getElementById("my-avatar").innerHTML = buildAvatarSVG(sk, cl, hs, cs);
   currentUser.skin = sk; currentUser.cloth = cl;
   currentUser.hairStyle = hs; currentUser.clothStyle = cs;
   const accs = getAccs();
@@ -251,7 +252,7 @@ function openStall(idx){
   const s = getStalls()[idx];
   document.getElementById("shop-name").innerText = s.name;
   document.getElementById("shop-desc").innerText = s.desc || "This creator has not written an introduction";
-  document.getElementById("shop-avatar").outerHTML = buildAvatarSVG(s.skin, s.cloth, s.hairStyle, s.clothStyle);
+  document.getElementById("shop-avatar").innerHTML = buildAvatarSVG(s.skin, s.cloth, s.hairStyle, s.clothStyle);
   document.getElementById("like-count").innerText = `Favorites: ${s.like}`;
   renderCarousel(s.art);
   pushPage("page-creator-shop");
@@ -443,9 +444,9 @@ function loadStallSetting(){
   document.getElementById("c-hair-style").value = s.hairStyle;
   document.getElementById("c-cloth-style").value = s.clothStyle;
   document.getElementById("stall-desc").value = s.desc;
-  // ✅ 穩定渲染頭像
+  // ✅ 改用 innerHTML，容器 ID 保留
   const avatarWrap = document.getElementById("creator-stall-avatar");
-  avatarWrap.outerHTML = buildAvatarSVG(s.skin, s.cloth, s.hairStyle, s.clothStyle);
+  avatarWrap.innerHTML = buildAvatarSVG(s.skin, s.cloth, s.hairStyle, s.clothStyle);
   let artHtml = "";
   s.art.forEach((a, idx)=> {
     artHtml += `
@@ -456,7 +457,6 @@ function loadStallSetting(){
   });
   document.getElementById("my-art-list").innerHTML = artHtml || "<p>No artwork yet</p>";
 }
-// 刪除單一作品
 function deleteArt(index){
   if(!confirm("Are you sure you want to delete this artwork?")) return;
   const stalls = getStalls();
@@ -466,7 +466,6 @@ function deleteArt(index){
   loadStallSetting();
   alert("Artwork deleted");
 }
-// 刪除整個攤位
 function deleteMyStall(){
   if(!confirm("⚠️ Are you sure? This will remove your stall completely and cannot undo!")) return;
   let stalls = getStalls();
