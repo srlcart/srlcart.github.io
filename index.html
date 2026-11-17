@@ -1,669 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Art World Shop｜Final Fixed Version</title>
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: "Comic Sans MS", sans-serif;
-}
-body{
-  background:#fff7f9;
-  color:#444;
-  overflow-x:hidden;
-}
-.page{
-  display:none;
-  min-height:100vh;
-  padding:20px;
-  animation: fadeIn 0.35s ease-out;
-}
-.page.active{
-  display:block;
-}
-@keyframes fadeIn{
-  from{opacity:0;transform: translateY(10px);}
-  to{opacity:1;transform: translateY(0);}
-}
-.back-btn{
-  position:fixed;
-  top:16px;
-  left:16px;
-  width:40px;
-  height:40px;
-  border-radius:50%;
-  background:#ffb6c1;
-  border:none;
-  font-size:22px;
-  cursor:pointer;
-  z-index:99;
-  box-shadow:0 3px 8px #0002;
-  transition:0.2s;
-}
-.back-btn:hover{
-  transform:scale(1.1);
-}
-.music-btn{
-  position:fixed;
-  top:16px;
-  right:16px;
-  width:40px;
-  height:40px;
-  border-radius:50%;
-  background:#b9f6ca;
-  border:none;
-  font-size:20px;
-  cursor:pointer;
-  z-index:99;
-  box-shadow:0 3px 8px #0002;
-  transition:0.2s;
-}
-.music-btn:hover{
-  transform:scale(1.1);
-}
-#page-choose{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:30px;
-}
-.title{
-  font-size:36px;
-  color:#ff78a8;
-  text-shadow:2px 2px white;
-}
-.mode-box{
-  display:flex;
-  gap:24px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-.mode-card{
-  width:220px;
-  padding:30px 20px;
-  background:white;
-  border-radius:24px;
-  box-shadow:0 4px 12px #00000015;
-  text-align:center;
-  cursor:pointer;
-  transition:0.25s ease;
-}
-.mode-card:hover{
-  transform:translateY(-6px);
-  background:#fff0f5;
-}
-.form-box{
-  width:min(340px,90%);
-  background:white;
-  padding:24px;
-  border-radius:24px;
-  box-shadow:0 4px 12px #00000015;
-}
-.form-box h4{
-  margin-bottom:14px;
-  font-size:20px;
-}
-input{
-  width:100%;
-  padding:12px;
-  margin:8px 0;
-  border:2px solid #ffd6e2;
-  border-radius:14px;
-  font-size:16px;
-  transition:0.2s;
-}
-input:focus{
-  outline:none;
-  border-color:#ff8fb3;
-}
-.btn{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:14px;
-  background:#ff8fb3;
-  color:white;
-  font-size:17px;
-  cursor:pointer;
-  margin-top:8px;
-  transition:0.2s;
-}
-.btn:hover{
-  background:#ff709e;
-  transform:scale(1.02);
-}
-.btn-gray{
-  background:#cccccc;
-}
-.btn-gray:hover{
-  background:#bbbbbb;
-}
-.visitor-home{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding-top:60px;
-  gap:24px;
-}
-.world-container{
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-.world-card{
-  width:260px;
-  height:220px;
-  border-radius:22px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  color:white;
-  font-size:26px;
-  font-weight:bold;
-  box-shadow:0 4px 14px #00000020;
-  cursor:pointer;
-  gap:16px;
-  transition:0.25s ease;
-}
-.world-card:hover{
-  transform:scale(1.04);
-}
-.world-draw{
-  background:#87cefa;
-}
-.world-craft{
-  background:#b9f6ca;
-  color:#333;
-}
-.start-btn{
-  padding:8px 24px;
-  background:white;
-  color:#333;
-  border-radius:12px;
-  font-size:20px;
-  border:none;
-  cursor:pointer;
-  transition:0.2s;
-}
-.start-btn:hover{
-  background:#fff;
-  transform:scale(1.08);
-}
-.back-figure{
-  margin-top:20px;
-  text-align:center;
-}
-.avatar-view{
-  width:120px;
-  height:160px;
-}
-.personal-btn{
-  margin-top:8px;
-  padding:8px 16px;
-  background:#ffc0cb;
-  border-radius:12px;
-  border:none;
-  cursor:pointer;
-  font-size:16px;
-  transition:0.2s;
-}
-.personal-btn:hover{
-  transform:scale(1.05);
-}
-.stall-list-page{
-  padding-top:60px;
-}
-.stall-wrap{
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-  justify-content:center;
-  margin-top:20px;
-}
-.stall-card{
-  width:240px;
-  background:white;
-  border-radius:20px;
-  padding:16px;
-  text-align:center;
-  box-shadow:0 3px 10px #00000012;
-  cursor:pointer;
-  transition:0.25s ease;
-}
-.stall-card:hover{
-  transform:translateY(-5px);
-}
-.stall-avatar{
-  width:80px;
-  height:100px;
-  margin:0 auto;
-}
-.stall-art{
-  width:100%;
-  height:140px;
-  background:#eee;
-  border-radius:12px;
-  margin:10px 0;
-  overflow:hidden;
-}
-.stall-art img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  border-radius:12px;
-}
-.creator-shop-page{
-  padding-top:60px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:16px;
-}
-.carousel-wrap{
-  position:relative;
-  width:min(340px,90%);
-  height:280px;
-  border-radius:20px;
-  overflow:hidden;
-  background:#eee;
-}
-.carousel-img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:none;
-}
-.carousel-img.active{
-  display:block;
-  animation: fadeIn 0.3s;
-}
-.carousel-arrow{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  background:#ffffffcc;
-  border:none;
-  font-size:20px;
-  cursor:pointer;
-  z-index:2;
-}
-.arrow-left{left:8px;}
-.arrow-right{right:8px;}
-.carousel-dot-group{
-  position:absolute;
-  bottom:10px;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  gap:6px;
-}
-.carousel-dot{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:#ffffff77;
-}
-.carousel-dot.active{
-  background:#fff;
-}
-.like-row{
-  display:flex;
-  gap:12px;
-  align-items:center;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-.like-btn{
-  padding:10px 14px;
-  background:#ff8fb3;
-  color:white;
-  border-radius:12px;
-  border:none;
-  cursor:pointer;
-  font-size:16px;
-  transition:0.2s;
-}
-.like-btn:hover{
-  transform:scale(1.05);
-}
-.cart-add-btn{
-  padding:10px 14px;
-  background:#82d8a8;
-  color:white;
-  border-radius:12px;
-  border:none;
-  cursor:pointer;
-  font-size:16px;
-  transition:0.2s;
-}
-.cart-add-btn:hover{
-  transform:scale(1.05);
-}
-.next-btn{
-  padding:10px 16px;
-  background:#add8e6;
-  border-radius:12px;
-  border:none;
-  cursor:pointer;
-  font-size:20px;
-  transition:0.2s;
-}
-.next-btn:hover{
-  transform:scale(1.05);
-}
-.personal-page{
-  padding-top:60px;
-  width:min(500px,90%);
-  margin:0 auto;
-}
-.cart-item{
-  background:white;
-  padding:12px;
-  border-radius:14px;
-  margin:10px 0;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.avatar-editor{
-  margin:20px 0;
-  background:white;
-  padding:16px;
-  border-radius:16px;
-}
-.style-select{
-  margin:6px 0;
-  width:100%;
-  padding:8px;
-  border-radius:10px;
-  border:2px solid #ffd6e2;
-}
-.creator-home{
-  padding-top:60px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:20px;
-}
-.creator-menu-card{
-  width:min(320px,90%);
-  background:white;
-  padding:24px;
-  border-radius:20px;
-  text-align:center;
-  box-shadow:0 4px 10px #00000012;
-  cursor:pointer;
-  transition:0.25s ease;
-}
-.creator-menu-card:hover{
-  transform:translateY(-4px);
-}
-.rank-item{
-  background:white;
-  padding:14px;
-  border-radius:14px;
-  margin:10px 0;
-  display:flex;
-  gap:12px;
-  align-items:center;
-}
-.rank-avatar{
-  width:60px;
-  height:70px;
-}
-.stall-manage{
-  width:min(500px,90%);
-  margin:0 auto;
-  padding-top:60px;
-}
-.upload-area{
-  background:white;
-  padding:20px;
-  border-radius:18px;
-  margin:16px 0;
-}
-.preview-img{
-  width:100%;
-  max-height:220px;
-  object-fit:contain;
-  margin:10px 0;
-  border-radius:12px;
-  background:#eee;
-}
-.earn-box{
-  background:white;
-  padding:24px;
-  border-radius:18px;
-  text-align:center;
-  margin-top:20px;
-}
-.checkout-form{
-  width:min(460px,90%);
-  margin:0 auto;
-  padding-top:60px;
-}
-.order-item{
-  background:white;
-  padding:10px;
-  border-radius:12px;
-  margin:8px 0;
-}
-</style>
-</head>
-<body>
-
-<button type="button" class="music-btn" id="music-toggle">🔇</button>
-<button type="button" class="back-btn" id="global-back" style="display:none;">←</button>
-
-<div class="page active" id="page-choose">
-  <h1 class="title">🎨 Art World Shop</h1>
-  <div class="mode-box">
-    <div class="mode-card" onclick="switchMode('visitor')">
-      <h3>Visitor</h3>
-      <p>Browse & buy artworks</p>
-    </div>
-    <div class="mode-card" onclick="switchMode('creator')">
-      <h3>Creator</h3>
-      <p>Post artworks & manage stall</p>
-    </div>
-  </div>
-  <div class="form-box">
-    <h4 id="form-title">Visitor Login</h4>
-    <input type="email" id="input-email" placeholder="Enter Email">
-    <input type="password" id="input-pwd" placeholder="Password">
-    <button type="button" class="btn" onclick="doLogin()">Login</button>
-    <button type="button" class="btn btn-gray" onclick="doRegister()">Register New Account</button>
-  </div>
-</div>
-
-<div class="page" id="page-visitor-home">
-  <div class="visitor-home">
-    <h2>Welcome to Art World</h2>
-    <div class="world-container">
-      <div class="world-card world-draw" onclick="openWorld('draw')">
-        Drawing World
-        <button type="button" class="start-btn">Start!</button>
-      </div>
-      <div class="world-card world-craft" onclick="openWorld('craft')">
-        Craft World
-        <button type="button" class="start-btn">Start!</button>
-      </div>
-    </div>
-    <div class="back-figure">
-      <svg class="avatar-view" id="visitor-home-avatar" viewBox="0 0 80 110">
-        <ellipse cx="40" cy="22" rx="16" ry="16" fill="#ffc9b0"/>
-        <path d="M24 38 L20 85 L60 85 L56 38 Z" fill="#7fb8e8"/>
-      </svg>
-      <br>
-      <button type="button" class="personal-btn" onclick="goVisitorPersonal()">Personal Center</button>
-    </div>
-  </div>
-</div>
-
-<div class="page" id="page-stall-list">
-  <div class="stall-list-page">
-    <h2 id="stall-list-title">Drawing World Shops</h2>
-    <div class="stall-wrap" id="stall-container"></div>
-  </div>
-</div>
-
-<div class="page" id="page-creator-shop">
-  <div class="creator-shop-page">
-    <h2 id="shop-name">Creator’s Stall</h2>
-    <svg class="stall-avatar" id="shop-avatar" viewBox="0 0 80 110">
-      <ellipse cx="40" cy="22" rx="16" ry="16" fill="#cccccc"/>
-      <path d="M24 38 L20 85 L60 85 L56 38 Z" fill="#cccccc"/>
-    </svg>
-    <div class="carousel-wrap">
-      <button type="button" class="carousel-arrow arrow-left" onclick="carouselPrev()">‹</button>
-      <div id="carousel-img-group"></div>
-      <button type="button" class="carousel-arrow arrow-right" onclick="carouselNext()">›</button>
-      <div class="carousel-dot-group" id="carousel-dots"></div>
-    </div>
-    <div class="like-row">
-      <button type="button" class="like-btn" onclick="likeStall()">❤️ Favorite</button>
-      <button type="button" class="cart-add-btn" onclick="addCart()">🛒 Add to Cart</button>
-      <button type="button" class="next-btn" onclick="nextStall()">→ Next Stall</button>
-    </div>
-    <p id="shop-desc">Creator introduction</p>
-    <p id="like-count">Favorites: 0</p>
-  </div>
-</div>
-
-<div class="page" id="page-visitor-personal">
-  <div class="personal-page">
-    <h2>👤 Personal Center</h2>
-    <div class="avatar-editor">
-      <h4>Customize your avatar</h4>
-      <svg class="avatar-view" id="my-avatar" viewBox="0 0 80 110">
-        <ellipse cx="40" cy="22" rx="16" ry="16" fill="#ffc9b0"/>
-        <path d="M24 38 L20 85 L60 85 L56 38 Z" fill="#7fb8e8"/>
-      </svg>
-      <br>
-      <select class="style-select" id="hair-style" onchange="changeAvatar()">
-        <option value="normal">Normal Hair</option>
-        <option value="short">Short Hair</option>
-        <option value="long">Long Hair</option>
-      </select>
-      <select class="style-select" id="cloth-style" onchange="changeAvatar()">
-        <option value="dress">Dress</option>
-        <option value="shirt">Shirt & Pants</option>
-        <option value="overalls">Overalls</option>
-      </select>
-      <input type="color" id="color-skin" value="#ffc9b0" onchange="changeAvatar()"> Skin Color
-      <input type="color" id="color-cloth" value="#7fb8e8" onchange="changeAvatar()"> Clothes Color
-    </div>
-    <h3>🛒 Shopping Cart</h3>
-    <div id="cart-list"></div>
-    <button type="button" class="btn" onclick="clearCart()">Clear Cart</button>
-    <button type="button" class="btn" onclick="goCheckout()">Checkout</button>
-    <h3 style="margin-top:20px;">📋 My Orders</h3>
-    <div id="order-list"></div>
-  </div>
-</div>
-
-<div class="page" id="page-creator-home">
-  <div class="creator-home">
-    <div class="creator-menu-card" onclick="goRanking()">
-      <h3>🏆 Ranking List</h3>
-      <p>View creator rankings</p>
-    </div>
-    <div class="creator-menu-card" onclick="goYourStall()">
-      <h3>🏪 Your Stall</h3>
-      <p>Upload artworks & set avatar</p>
-    </div>
-    <div class="creator-menu-card" onclick="goCreatorCenter()">
-      <h3>💰 Creator Center</h3>
-      <p>Earnings & profile</p>
-    </div>
-  </div>
-</div>
-
-<div class="page" id="page-ranking">
-  <div style="width:min(500px,90%);margin:0 auto;padding-top:60px;">
-    <h2>🏆 Creator Ranking</h2>
-    <div id="rank-container"></div>
-  </div>
-</div>
-
-<div class="page" id="page-your-stall">
-  <div class="stall-manage">
-    <h2>🏪 Manage Your Stall</h2>
-    <div class="upload-area">
-      <h4>Set your stall avatar</h4>
-      <svg class="stall-avatar" id="creator-stall-avatar" viewBox="0 0 80 110">
-        <ellipse cx="40" cy="22" rx="16" ry="16" fill="#cccccc"/>
-        <path d="M24 38 L20 85 L60 85 L56 38 Z" fill="#cccccc"/>
-      </svg>
-      <br>
-      <select class="style-select" id="c-hair-style" onchange="updateStallAvatar()">
-        <option value="normal">Normal Hair</option>
-        <option value="short">Short Hair</option>
-        <option value="long">Long Hair</option>
-      </select>
-      <select class="style-select" id="c-cloth-style" onchange="updateStallAvatar()">
-        <option value="dress">Dress</option>
-        <option value="shirt">Shirt & Pants</option>
-        <option value="overalls">Overalls</option>
-      </select>
-      <input type="color" id="c-skin" value="#cccccc" onchange="updateStallAvatar()"> Skin Color
-      <input type="color" id="c-cloth" value="#cccccc" onchange="updateStallAvatar()"> Clothes Color
-    </div>
-    <div class="upload-area">
-      <h4>Upload Artwork</h4>
-      <input type="file" id="art-file" accept="image/*" onchange="previewArt()">
-      <img class="preview-img" id="art-preview" src="" style="display:none;">
-      <input type="text" id="art-name" placeholder="Artwork Name">
-      <input type="text" id="art-price" placeholder="Price">
-      <button type="button" class="btn" onclick="uploadArt()">Publish Artwork</button>
-    </div>
-    <div class="upload-area">
-      <h4>Introduction</h4>
-      <input type="text" id="stall-desc" placeholder="Write your introduction">
-      <button type="button" class="btn" onclick="saveDesc()">Save Introduction</button>
-    </div>
-    <h4>Published Artworks</h4>
-    <div id="my-art-list"></div>
-  </div>
-</div>
-
-<div class="page" id="page-creator-center">
-  <div style="width:min(500px,90%);margin:0 auto;padding-top:60px;">
-    <h2>💰 Creator Center</h2>
-    <div class="earn-box">
-      <h3>Total Earnings</h3>
-      <p style="font-size:32px;color:#ff78a8" id="earn-num">$0</p>
-    </div>
-    <div class="upload-area">
-      <h4>Edit Profile</h4>
-      <input type="text" id="c-name" placeholder="Display Name">
-      <input type="text" id="c-intro" placeholder="Bio">
-      <button type="button" class="btn" onclick="saveCreatorInfo()">Save</button>
-    </div>
-  </div>
-</div>
-
-<div class="page" id="page-checkout">
-  <div class="checkout-form">
-    <h2>✅ Checkout</h2>
-    <div id="checkout-items"></div>
-    <input type="text" id="ship-address" placeholder="Shipping Address">
-    <input type="text" id="pay-method" placeholder="Payment Method: FPS / Bank Transfer / Credit Card">
-    <button type="button" class="btn" onclick="submitOrder()">Submit Order</button>
-  </div>
-</div>
-
-<script>
 let currentMode = "visitor";
 let currentUser = null;
 let pageStack = [];
@@ -685,7 +19,51 @@ document.getElementById("music-toggle").onclick = function(){
 
 function initStorage(){
   if(!localStorage.getItem("accs")) localStorage.setItem("accs", JSON.stringify([]));
-  if(!localStorage.getItem("stalls")) localStorage.setItem("stalls", JSON.stringify([]));
+  if(!localStorage.getItem("stalls")){
+    const demoStalls = [
+      {
+        owner:"demo1@test.com",
+        type:"drawing",
+        name:"Lily’s Drawing",
+        desc:"I love drawing cute animals and illustration",
+        skin:"#ffd6c0", cloth:"#87cefa",
+        hairStyle:"long", clothStyle:"dress",
+        art:[{name:"Cat Painting",price:"30",img:""}],
+        like:12, buy:5, likedBy:[]
+      },
+      {
+        owner:"demo2@test.com",
+        type:"drawing",
+        name:"Rainbow Sketch",
+        desc:"Watercolor & fantasy scenery",
+        skin:"#ffe0cc", cloth:"#ffb6c1",
+        hairStyle:"short", clothStyle:"shirt",
+        art:[{name:"Sunset Hill",price:"35",img:""}],
+        like:16, buy:7, likedBy:[]
+      },
+      {
+        owner:"demo3@test.com",
+        type:"craft",
+        name:"Handmade Craft Shop",
+        desc:"Handmade resin & accessory",
+        skin:"#ffc9b0", cloth:"#b9f6ca",
+        hairStyle:"short", clothStyle:"shirt",
+        art:[{name:"Resin Keychain",price:"45",img:""}],
+        like:18, buy:9, likedBy:[]
+      },
+      {
+        owner:"demo4@test.com",
+        type:"craft",
+        name:"Clay Mini World",
+        desc:"Polymer clay miniature figure",
+        skin:"#ffd2b8", cloth:"#dda0dd",
+        hairStyle:"normal", clothStyle:"overalls",
+        art:[{name:"Mini Bunny",price:"50",img:""}],
+        like:22, buy:11, likedBy:[]
+      }
+    ]
+    localStorage.setItem("stalls", JSON.stringify(demoStalls));
+  }
   if(!localStorage.getItem("orders")) localStorage.setItem("orders", JSON.stringify([]));
 }
 initStorage();
@@ -716,6 +94,12 @@ document.getElementById("global-back").onclick = function(){
   }
 }
 function pushPage(pageId){
+  // ✅ 重點：如果而家已經係呢個頁面，直接重新載資料，唔推堆疊
+  const activePage = document.querySelector(".page.active").id;
+  if(activePage === pageId){
+    if(pageId === "page-your-stall") loadStallSetting();
+    return;
+  }
   pageStack.push(pageId);
   goPage(pageId);
 }
@@ -746,7 +130,6 @@ function doLogin(){
 function doRegister(){
   const email = document.getElementById("input-email").value.trim();
   const pwd = document.getElementById("input-pwd").value.trim();
-  console.log("嘗試註冊", currentMode, email, pwd);
   if(!email || !pwd){
     alert("Please fill in Email and Password");
     return;
@@ -771,6 +154,7 @@ function doRegister(){
     const stalls = getStalls();
     stalls.push({
       owner:email,
+      type:"drawing",
       name:newUser.name,
       desc:"",
       skin:"#cccccc", cloth:"#cccccc",
@@ -802,7 +186,7 @@ function buildAvatarSVG(skin, cloth, hairStyle, clothStyle){
     bodyPath = `<path d="M24 38 L20 85 L60 85 L56 38 Z" fill="${cloth}"/>`;
   }
   return `
-    <svg viewBox="0 0 80 110">
+    <svg class="stall-avatar" viewBox="0 0 80 110">
       ${hairPath}
       <ellipse cx="40" cy="22" rx="16" ry="16" fill="${skin}"/>
       ${bodyPath}
@@ -838,7 +222,12 @@ function renderStallList(){
   const wrap = document.getElementById("stall-container");
   wrap.innerHTML = "";
   const stalls = getStalls();
-  stalls.forEach((s,idx)=>{
+  const filterStalls = stalls.filter(s=>s.type === currentWorld);
+  if(filterStalls.length === 0){
+    wrap.innerHTML = `<div class="empty-tip">No stalls yet! Register as Creator to open your stall.</div>`;
+    return;
+  }
+  filterStalls.forEach((s,idx)=>{
     const div = document.createElement("div");
     div.className="stall-card";
     let artHtml = `<div class="stall-art">No artwork yet</div>`;
@@ -851,7 +240,8 @@ function renderStallList(){
       <p>${s.name}</p>
       <p>❤️ ${s.like} | 🛒 ${s.buy}</p>
     `;
-    div.onclick = ()=> openStall(idx);
+    const realIndex = stalls.findIndex(x=>x.owner === s.owner);
+    div.onclick = ()=> openStall(realIndex);
     wrap.appendChild(div);
   })
 }
@@ -906,9 +296,13 @@ function carouselPrev(){
 }
 function nextStall(){
   const stalls = getStalls();
-  currentStallIndex++;
-  if(currentStallIndex >= stalls.length) currentStallIndex = 0;
-  openStall(currentStallIndex);
+  const filterStalls = stalls.filter(s=>s.type === currentWorld);
+  let now = filterStalls.findIndex(x=> stalls[currentStallIndex].owner === x.owner);
+  now++;
+  if(now >= filterStalls.length) now = 0;
+  const target = filterStalls[now];
+  const realIdx = stalls.findIndex(x=>x.owner === target.owner);
+  openStall(realIdx);
 }
 function likeStall(){
   const stalls = getStalls();
@@ -1043,29 +437,55 @@ function loadStallSetting(){
   const stalls = getStalls();
   const s = stalls.find(x=>x.owner === currentUser.email);
   if(!s) return;
+  document.getElementById("stall-type").value = s.type;
   document.getElementById("c-skin").value = s.skin;
   document.getElementById("c-cloth").value = s.cloth;
   document.getElementById("c-hair-style").value = s.hairStyle;
   document.getElementById("c-cloth-style").value = s.clothStyle;
   document.getElementById("stall-desc").value = s.desc;
-  document.getElementById("creator-stall-avatar").outerHTML = buildAvatarSVG(s.skin, s.cloth, s.hairStyle, s.clothStyle);
+  // ✅ 穩定渲染頭像
+  const avatarWrap = document.getElementById("creator-stall-avatar");
+  avatarWrap.outerHTML = buildAvatarSVG(s.skin, s.cloth, s.hairStyle, s.clothStyle);
   let artHtml = "";
-  s.art.forEach(a=> {
-    artHtml += `<div class="order-item">${a.name} $${a.price}</div>`;
+  s.art.forEach((a, idx)=> {
+    artHtml += `
+    <div class="art-row">
+      <span>${a.name} $${a.price}</span>
+      <button class="btn btn-red" style="width:auto;padding:4px 8px;font-size:14px;" onclick="deleteArt(${idx})">Delete</button>
+    </div>`;
   });
   document.getElementById("my-art-list").innerHTML = artHtml || "<p>No artwork yet</p>";
+}
+// 刪除單一作品
+function deleteArt(index){
+  if(!confirm("Are you sure you want to delete this artwork?")) return;
+  const stalls = getStalls();
+  const s = stalls.find(x=>x.owner === currentUser.email);
+  s.art.splice(index,1);
+  setStalls(stalls);
+  loadStallSetting();
+  alert("Artwork deleted");
+}
+// 刪除整個攤位
+function deleteMyStall(){
+  if(!confirm("⚠️ Are you sure? This will remove your stall completely and cannot undo!")) return;
+  let stalls = getStalls();
+  stalls = stalls.filter(x=>x.owner !== currentUser.email);
+  setStalls(stalls);
+  alert("✅ Your stall has been deleted.");
+  pushPage("page-creator-home");
 }
 function updateStallAvatar(){
   const sk = document.getElementById("c-skin").value;
   const cl = document.getElementById("c-cloth").value;
   const hs = document.getElementById("c-hair-style").value;
   const cs = document.getElementById("c-cloth-style").value;
-  document.getElementById("creator-stall-avatar").outerHTML = buildAvatarSVG(sk, cl, hs, cs);
   const stalls = getStalls();
   const s = stalls.find(x=>x.owner === currentUser.email);
   s.skin = sk; s.cloth = cl;
   s.hairStyle = hs; s.clothStyle = cs;
   setStalls(stalls);
+  loadStallSetting();
 }
 function saveDesc(){
   const d = document.getElementById("stall-desc").value.trim();
@@ -1094,6 +514,7 @@ function uploadArt(){
   const stalls = getStalls();
   const s = stalls.find(x=>x.owner === currentUser.email);
   s.art.push({name, price, img: tempArtBase64});
+  s.type = document.getElementById("stall-type").value;
   setStalls(stalls);
   loadStallSetting();
   document.getElementById("art-preview").style.display = "none";
@@ -1118,10 +539,7 @@ function saveCreatorInfo(){
   setAccs(accs);
   const stalls = getStalls();
   const s = stalls.find(x=>x.owner === currentUser.email);
-  s.name = n;
+  if(s) s.name = n;
   setStalls(stalls);
   alert("Profile saved");
 }
-</script>
-</body>
-</html>
