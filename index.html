@@ -1,821 +1,1159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ST.ROSE OF LIMA'S COLLEGE Paper Cut Art Shop</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Art World Shop｜Final Version</title>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: "Comic Sans MS", sans-serif;
+}
+body{
+  background:#fff7f9;
+  color:#444;
+  overflow-x:hidden;
+}
+.page{
+  display:none;
+  min-height:100vh;
+  padding:20px;
+  animation: fadeIn 0.35s ease-out;
+}
+.page.active{
+  display:block;
+}
+@keyframes fadeIn{
+  from{opacity:0;transform: translateY(10px);}
+  to{opacity:1;transform: translateY(0);}
+}
+.back-btn{
+  position:fixed;
+  top:16px;
+  left:16px;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#ffb6c1;
+  border:none;
+  font-size:22px;
+  cursor:pointer;
+  z-index:99;
+  box-shadow:0 3px 8px #0002;
+  transition:0.2s;
+}
+.back-btn:hover{
+  transform:scale(1.1);
+}
+.music-btn{
+  position:fixed;
+  top:16px;
+  right:16px;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:#b9f6ca;
+  border:none;
+  font-size:20px;
+  cursor:pointer;
+  z-index:99;
+  box-shadow:0 3px 8px #0002;
+  transition:0.2s;
+}
+.music-btn:hover{
+  transform:scale(1.1);
+}
+/* Login Choose Page */
+#page-choose{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:30px;
+}
+.title{
+  font-size:36px;
+  color:#ff78a8;
+  text-shadow:2px 2px white;
+}
+.mode-box{
+  display:flex;
+  gap:24px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.mode-card{
+  width:220px;
+  padding:30px 20px;
+  background:white;
+  border-radius:24px;
+  box-shadow:0 4px 12px #00000015;
+  text-align:center;
+  cursor:pointer;
+  transition:0.25s ease;
+}
+.mode-card:hover{
+  transform:translateY(-6px);
+  background:#fff0f5;
+}
+.form-box{
+  width:min(340px,90%);
+  background:white;
+  padding:24px;
+  border-radius:24px;
+  box-shadow:0 4px 12px #00000015;
+}
+.form-box h4{
+  margin-bottom:14px;
+  font-size:20px;
+}
+input{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border:2px solid #ffd6e2;
+  border-radius:14px;
+  font-size:16px;
+  transition:0.2s;
+}
+input:focus{
+  outline:none;
+  border-color:#ff8fb3;
+}
+.btn{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:14px;
+  background:#ff8fb3;
+  color:white;
+  font-size:17px;
+  cursor:pointer;
+  margin-top:8px;
+  transition:0.2s;
+}
+.btn:hover{
+  background:#ff709e;
+  transform:scale(1.02);
+}
+.btn-gray{
+  background:#cccccc;
+}
+.btn-gray:hover{
+  background:#bbbbbb;
+}
 
-        :root {
-            --cream: #fbf7f1;
-            --light-warm: #f3ece3;
-            --latte: #d9c9b8;
-            --latte-strong: #b9a590;
-            --brown: #5a4a42;
-            --brown-soft: #7d6b62;
-            --dusty-rose: #b5837a;
-            --dusty-rose-strong: #96665e;
-            --card-bg: #ffffff;
-            --border: #ece3d7;
-        }
+/* Visitor Home: Drawing / Craft Blocks */
+.visitor-home{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding-top:60px;
+  gap:24px;
+}
+.world-container{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.world-card{
+  width:260px;
+  height:220px;
+  border-radius:22px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:26px;
+  font-weight:bold;
+  box-shadow:0 4px 14px #00000020;
+  cursor:pointer;
+  gap:16px;
+  transition:0.25s ease;
+}
+.world-card:hover{
+  transform:scale(1.04);
+}
+.world-draw{
+  background:#87cefa;
+}
+.world-craft{
+  background:#b9f6ca;
+  color:#333;
+}
+.start-btn{
+  padding:8px 24px;
+  background:white;
+  color:#333;
+  border-radius:12px;
+  font-size:20px;
+  border:none;
+  cursor:pointer;
+  transition:0.2s;
+}
+.start-btn:hover{
+  background:#fff;
+  transform:scale(1.08);
+}
+.back-figure{
+  margin-top:20px;
+  text-align:center;
+}
+.avatar-view{
+  width:120px;
+  height:160px;
+}
+.personal-btn{
+  margin-top:8px;
+  padding:8px 16px;
+  background:#ffc0cb;
+  border-radius:12px;
+  border:none;
+  cursor:pointer;
+  font-size:16px;
+  transition:0.2s;
+}
+.personal-btn:hover{
+  transform:scale(1.05);
+}
 
-        body {
-            background-color: var(--cream);
-            color: var(--brown);
-            background-image:
-                radial-gradient(circle at 15% 5%, rgba(217, 201, 184, 0.45) 0, transparent 28%),
-                radial-gradient(circle at 85% 12%, rgba(181, 131, 122, 0.18) 0, transparent 24%),
-                radial-gradient(circle at 8% 85%, rgba(217, 201, 184, 0.35) 0, transparent 26%),
-                radial-gradient(circle at 92% 92%, rgba(181, 131, 122, 0.15) 0, transparent 22%);
-            background-attachment: fixed;
-            position: relative;
-        }
+/* Stall List Page */
+.stall-list-page{
+  padding-top:60px;
+}
+.stall-wrap{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-top:20px;
+}
+.stall-card{
+  width:240px;
+  background:white;
+  border-radius:20px;
+  padding:16px;
+  text-align:center;
+  box-shadow:0 3px 10px #00000012;
+  cursor:pointer;
+  transition:0.25s ease;
+}
+.stall-card:hover{
+  transform:translateY(-5px);
+}
+.stall-avatar{
+  width:80px;
+  height:100px;
+  margin:0 auto;
+}
+.stall-art{
+  width:100%;
+  height:140px;
+  background:#eee;
+  border-radius:12px;
+  margin:10px 0;
+  overflow:hidden;
+}
+.stall-art img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:12px;
+}
 
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            background-image:
-                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='70' height='70' viewBox='0 0 70 70'><text x='8' y='22' font-size='11' fill='%23c9b59f' opacity='0.45'>✿</text></svg>"),
-                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'><text x='52' y='76' font-size='12' fill='%23b9a590' opacity='0.38'>✦</text></svg>");
-            background-size: 70px, 90px;
-            background-repeat: repeat;
-            opacity: 0.4;
-            z-index: 0;
-        }
+/* Creator Shop Page (Visitor View)｜Carousel */
+.creator-shop-page{
+  padding-top:60px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:16px;
+}
+.carousel-wrap{
+  position:relative;
+  width:min(340px,90%);
+  height:280px;
+  border-radius:20px;
+  overflow:hidden;
+  background:#eee;
+}
+.carousel-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:none;
+}
+.carousel-img.active{
+  display:block;
+  animation: fadeIn 0.3s;
+}
+.carousel-arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:#ffffffcc;
+  border:none;
+  font-size:20px;
+  cursor:pointer;
+  z-index:2;
+}
+.arrow-left{left:8px;}
+.arrow-right{right:8px;}
+.carousel-dot-group{
+  position:absolute;
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:6px;
+}
+.carousel-dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#ffffff77;
+}
+.carousel-dot.active{
+  background:#fff;
+}
+.like-row{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.like-btn{
+  padding:10px 14px;
+  background:#ff8fb3;
+  color:white;
+  border-radius:12px;
+  border:none;
+  cursor:pointer;
+  font-size:16px;
+  transition:0.2s;
+}
+.like-btn:hover{
+  transform:scale(1.05);
+}
+.cart-add-btn{
+  padding:10px 14px;
+  background:#82d8a8;
+  color:white;
+  border-radius:12px;
+  border:none;
+  cursor:pointer;
+  font-size:16px;
+  transition:0.2s;
+}
+.cart-add-btn:hover{
+  transform:scale(1.05);
+}
+.next-btn{
+  padding:10px 16px;
+  background:#add8e6;
+  border-radius:12px;
+  border:none;
+  cursor:pointer;
+  font-size:20px;
+  transition:0.2s;
+}
+.next-btn:hover{
+  transform:scale(1.05);
+}
 
-        /* 小人裝飾：全部內嵌SVG，不依賴外部圖片 */
-        .mascot {
-            position: absolute;
-            width: 52px;
-            height: auto;
-            z-index: 2;
-            pointer-events: none;
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.12));
-        }
+/* Visitor Personal Page */
+.personal-page{
+  padding-top:60px;
+  width:min(500px,90%);
+  margin:0 auto;
+}
+.cart-item{
+  background:white;
+  padding:12px;
+  border-radius:14px;
+  margin:10px 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.avatar-editor{
+  margin:20px 0;
+  background:white;
+  padding:16px;
+  border-radius:16px;
+}
+.style-select{
+  margin:6px 0;
+  width:100%;
+  padding:8px;
+  border-radius:10px;
+  border:2px solid #ffd6e2;
+}
 
-        .m1 { top: 18px; left: 4%; transform: rotate(-10deg); }
-        .m2 { top: 14px; right: 4%; transform: rotate(8deg); }
-        .m3 { top: 120px; left: -6px; }
-        .m4 { top: 180px; right: -4px; }
-        .m5 { top: 300px; left: 2%; }
-        .m6 { top: 420px; right: 2%; }
-        .m7 { bottom: 160px; left: 4%; }
-        .m8 { bottom: 100px; right: 4%; }
-        .m9 { bottom: 24px; left: 14%; }
+/* Creator Home */
+.creator-home{
+  padding-top:60px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+}
+.creator-menu-card{
+  width:min(320px,90%);
+  background:white;
+  padding:24px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 4px 10px #00000012;
+  cursor:pointer;
+  transition:0.25s ease;
+}
+.creator-menu-card:hover{
+  transform:translateY(-4px);
+}
 
-        .container, header, nav, section, footer {
-            position: relative;
-            z-index: 1;
-        }
+/* Ranking Page */
+.rank-item{
+  background:white;
+  padding:14px;
+  border-radius:14px;
+  margin:10px 0;
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.rank-avatar{
+  width:60px;
+  height:70px;
+}
 
-        header {
-            background: linear-gradient(135deg, #f3ece3 0%, #e7d9c8 100%);
-            color: var(--brown);
-            padding: 3rem 2rem;
-            text-align: center;
-            border-bottom: 3px dashed var(--latte);
-            position: relative;
-            overflow: hidden;
-        }
+/* Stall Management (Creator) */
+.stall-manage{
+  width:min(500px,90%);
+  margin:0 auto;
+  padding-top:60px;
+}
+.upload-area{
+  background:white;
+  padding:20px;
+  border-radius:18px;
+  margin:16px 0;
+}
+.preview-img{
+  width:100%;
+  max-height:220px;
+  object-fit:contain;
+  margin:10px 0;
+  border-radius:12px;
+  background:#eee;
+}
 
-        header h1 {
-            font-size: 2.4rem;
-            margin-bottom: 0.6rem;
-            letter-spacing: 3px;
-            text-shadow: 2px 2px 0 #fff;
-        }
+/* Creator Earning Center */
+.earn-box{
+  background:white;
+  padding:24px;
+  border-radius:18px;
+  text-align:center;
+  margin-top:20px;
+}
 
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.85;
-            font-style: italic;
-        }
-
-        nav {
-            background: #f6f0e7;
-            padding: 1rem;
-            text-align: center;
-            border-bottom: 2px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-
-        nav a {
-            color: var(--brown);
-            text-decoration: none;
-            margin: 0 1rem;
-            font-weight: 500;
-            transition: 0.3s;
-        }
-
-        nav a:hover {
-            color: var(--dusty-rose-strong);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 3rem auto;
-            padding: 0 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            color: var(--brown);
-            position: relative;
-            width: 100%;
-        }
-
-        .section-title::before,
-        .section-title::after {
-            content: "✿";
-            position: relative;
-            margin: 0 12px;
-            color: var(--dusty-rose);
-            font-size: 1.4rem;
-            vertical-align: middle;
-        }
-
-        .filter-wrap {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .filter-btn {
-            padding: 0.6rem 1.3rem;
-            margin: 0 0.3rem 0.4rem;
-            border: 2px solid var(--border);
-            border-radius: 999px;
-            background: #fff;
-            color: var(--brown);
-            cursor: pointer;
-            transition: 0.3s;
-            font-weight: 500;
-        }
-
-        .filter-btn:hover {
-            border-color: var(--latte-strong);
-            color: var(--dusty-rose-strong);
-        }
-
-        .filter-btn.active {
-            background: var(--latte);
-            color: #fff;
-            border-color: var(--latte);
-        }
-
-        .works-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .work-card {
-            background: var(--card-bg);
-            border-radius: 22px;
-            overflow: hidden;
-            box-shadow: 0 6px 18px rgba(120, 90, 70, 0.12);
-            transition: 0.35s;
-            border: 2px solid var(--border);
-            position: relative;
-        }
-
-        .work-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 24px rgba(120, 90, 70, 0.18);
-        }
-
-        .work-img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            cursor: pointer;
-            border-bottom: 3px dashed var(--latte);
-        }
-
-        .work-info {
-            padding: 1.4rem;
-        }
-
-        .work-info h3 {
-            margin-bottom: 0.4rem;
-            color: var(--brown);
-        }
-
-        .price {
-            color: var(--dusty-rose-strong);
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin: 0.6rem 0;
-        }
-
-        .desc {
-            font-size: 0.9rem;
-            color: var(--brown-soft);
-            margin-bottom: 1rem;
-            line-height: 1.5;
-        }
-
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 0.75rem;
-            border: none;
-            border-radius: 14px;
-            background: linear-gradient(135deg, #c9a59b 0%, #96665e 100%);
-            color: white;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: 0.3s;
-            letter-spacing: 0.5px;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(150, 102, 94, 0.25);
-        }
-
-        #cart, #checkout, #faq {
-            background: #fff;
-            border-radius: 22px;
-            padding: 2rem;
-            box-shadow: 0 6px 18px rgba(120, 90, 70, 0.12);
-            border: 2px solid var(--border);
-        }
-
-        #cart {
-            margin: 4rem 0;
-        }
-
-        .cart-item {
-            padding: 0.7rem 0;
-            border-bottom: 1px dashed var(--border);
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .form-item {
-            margin-bottom: 1rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.4rem;
-            color: var(--brown);
-            font-weight: 500;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            background: var(--cream);
-            color: var(--brown);
-            font-family: inherit;
-        }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--latte-strong);
-            box-shadow: 0 0 0 3px rgba(185, 165, 144, 0.25);
-        }
-
-        .payment-info {
-            margin-top: 1.2rem;
-            padding: 1.3rem;
-            background: var(--light-warm);
-            border-radius: 16px;
-            border-left: 4px solid var(--dusty-rose);
-            display: none;
-        }
-
-        .faq-item {
-            border-bottom: 1px dashed var(--border);
-        }
-
-        .faq-question {
-            padding: 1rem 0;
-            cursor: pointer;
-            font-weight: 500;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .faq-question::after {
-            content: "+";
-            font-size: 1.4rem;
-            color: var(--dusty-rose);
-            transition: 0.3s;
-        }
-
-        .faq-question.open::after {
-            transform: rotate(45deg);
-        }
-
-        .faq-answer {
-            padding: 0 0 1rem;
-            color: var(--brown-soft);
-            display: none;
-            line-height: 1.6;
-        }
-
-        .lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(40, 30, 25, 0.85);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 999;
-        }
-
-        .lightbox img {
-            max-width: 90%;
-            max-height: 88vh;
-            border-radius: 14px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-        }
-
-        .lightbox-close {
-            position: absolute;
-            top: 24px;
-            right: 30px;
-            color: #fff;
-            font-size: 2.4rem;
-            cursor: pointer;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background: linear-gradient(135deg, #f3ece3 0%, #e7d9c8 100%);
-            color: var(--brown);
-            margin-top: 3rem;
-            border-top: 3px dashed var(--latte);
-            position: relative;
-            overflow: hidden;
-        }
-
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.9rem;
-            }
-
-            .section-title {
-                font-size: 1.6rem;
-            }
-
-            .mascot {
-                width: 42px;
-            }
-        }
-    </style>
+/* Checkout Page */
+.checkout-form{
+  width:min(460px,90%);
+  margin:0 auto;
+  padding-top:60px;
+}
+.order-item{
+  background:white;
+  padding:10px;
+  border-radius:12px;
+  margin:8px 0;
+}
+</style>
 </head>
 <body>
 
-    <!-- 9個小人裝飾：全部內嵌SVG，打開即顯示 -->
-    <div class="mascot m1">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="50" cy="75" rx="18" ry="10" fill="#e8d5c4"/>
-            <circle cx="50" cy="42" r="26" fill="#2c2c2c"/>
-            <path d="M28 30 Q32 18 50 16 Q68 18 72 30" fill="#2c2c2c"/>
-            <circle cx="40" cy="44" r="5" fill="#fff"/>
-            <circle cx="60" cy="44" r="5" fill="#fff"/>
-            <circle cx="41" cy="45" r="2.5" fill="#111"/>
-            <circle cx="61" cy="45" r="2.5" fill="#111"/>
-            <path d="M44 54 Q50 58 56 54" stroke="#111" stroke-width="1.5" fill="none"/>
-            <circle cx="30" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
-            <circle cx="70" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
-            <path d="M34 70 L32 88 L42 90 L46 74 Z" fill="#3f5aa8"/>
-            <path d="M66 70 L68 88 L58 90 L54 74 Z" fill="#3f5aa8"/>
-            <circle cx="32" cy="90" r="4" fill="#2c2c2c"/>
-            <circle cx="68" cy="90" r="4" fill="#2c2c2c"/>
-        </svg>
+<button class="music-btn" id="music-toggle">🔇</button>
+<button class="back-btn" id="global-back" style="display:none;">←</button>
+
+<!-- Page 0: Login / Register Choose -->
+<div class="page active" id="page-choose">
+  <h1 class="title">🎨 Art World Shop</h1>
+  <div class="mode-box">
+    <div class="mode-card" onclick="switchMode('visitor')">
+      <h3>Visitor</h3>
+      <p>Browse & buy artworks</p>
     </div>
-
-    <div class="mascot m2">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="50" cy="75" rx="18" ry="10" fill="#e8d5c4"/>
-            <circle cx="50" cy="42" r="26" fill="#2c2c2c"/>
-            <path d="M26 36 Q34 20 50 18 Q66 20 74 36" fill="#2c2c2c"/>
-            <path d="M20 40 Q26 30 34 34" stroke="#2c2c2c" stroke-width="4" fill="none"/>
-            <path d="M80 40 Q74 30 66 34" stroke="#2c2c2c" stroke-width="4" fill="none"/>
-            <circle cx="40" cy="44" r="5" fill="#fff"/>
-            <circle cx="60" cy="44" r="5" fill="#fff"/>
-            <circle cx="41" cy="45" r="2.5" fill="#111"/>
-            <circle cx="61" cy="45" r="2.5" fill="#111"/>
-            <path d="M44 54 Q50 58 56 54" stroke="#111" stroke-width="1.5" fill="none"/>
-            <circle cx="30" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
-            <circle cx="70" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
-            <path d="M34 70 L32 88 L42 90 L46 74 Z" fill="#2f2f2f"/>
-            <path d="M66 70 L68 88 L58 90 L54 74 Z" fill="#2f2f2f"/>
-            <circle cx="32" cy="90" r="4" fill="#2c2c2c"/>
-            <circle cx="68" cy="90" r="4" fill="#2c2c2c"/>
-        </svg>
+    <div class="mode-card" onclick="switchMode('creator')">
+      <h3>Creator</h3>
+      <p>Post artworks & manage stall</p>
     </div>
+  </div>
+  <div class="form-box">
+    <h4 id="form-title">Visitor Login</h4>
+    <input type="email" id="input-email" placeholder="Enter Email">
+    <input type="password" id="input-pwd" placeholder="Password">
+    <button class="btn" onclick="doLogin()">Login</button>
+    <button class="btn btn-gray" onclick="doRegister()">Register New Account</button>
+  </div>
+</div>
 
-    <div class="mascot m3">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="50" cy="75" rx="18" ry="10" fill="#e8d5c4"/>
-            <circle cx="50" cy="42" r="26" fill="#e6d77a"/>
-            <path d="M28 32 Q34 18 50 16 Q66 18 72 32" fill="#e6d77a"/>
-            <circle cx="40" cy="44" r="5" fill="#fff"/>
-            <circle cx="60" cy="44" r="5" fill="#fff"/>
-            <circle cx="41" cy="45" r="2.5" fill="#111"/>
-            <circle cx="61" cy="45" r="2.5" fill="#111"/>
-            <path d="M44 54 Q50 58 56 54" stroke="#111" stroke-width="1.5" fill="none"/>
-            <circle cx="30" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
-            <circle cx="70" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
-            <path d="M34 70 L32 88 L42 90 L46 74 Z" fill="#7faadf"/>
-            <path d="M66 70 L68 88 L58 90 L54 74 Z" fill="#7faadf"/>
-            <circle cx="32" cy="90" r="4" fill="#2c2c2c"/>
-            <circle cx="68" cy="90" r="4" fill="#2c2c2c"/>
-        </svg>
+<!-- Page1: Visitor Home -->
+<div class="page" id="page-visitor-home">
+  <div class="visitor-home">
+    <h2>Welcome to Art World</h2>
+    <div class="world-container">
+      <div class="world-card world-draw" onclick="openWorld('draw')">
+        Drawing World
+        <button class="start-btn">Start!</button>
+      </div>
+      <div class="world-card world-craft" onclick="openWorld('craft')">
+        Craft World
+        <button class="start-btn">Start!</button>
+      </div>
     </div>
-
-    <div class="mascot m4">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="50" cy="75" rx="18" ry="10" fill="#e8d5c4"/>
-            <circle cx="50" cy="42" r="26" fill="#2c2c2c"/>
-            <path d="M28 30 Q34 18 50 16 Q66 18 72 30" fill="#2c2c2c"/>
-            <path d="M20 50 Q14 60 20 70" stroke="#2c2c2c" stroke-width="5" fill="none"/>
-            <path d="M80 50 Q86 60 80 70" stroke="#2c2c2c" stroke-width="5" fill="none"/>
-            <circle cx="40" cy="44" r="5" fill="#fff"/>
-            <circle cx="60" cy="44" r="5" fill="#fff"/>
-            <circle cx="41" cy="45" r="2.5" fill="#111"/>
-            <circle cx="61" cy="45" r="2.5" fill="#111"/>
-            <path d="M44 54 Q50 58 56 54" stroke="#111" stroke-width="1.5" fill="none"/>
-            <circle cx="30" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
-            <circle cx="70" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
-            <path d="M34 70 L32 88 L42 90 L46 74 Z" fill="#d66868"/>
-            <path d="M66 70 L68 88 L58 90 L54 74 Z" fill="#d66868"/>
-            <circle cx="32" cy="90" r="4" fill="#2c2c2c"/>
-            <circle cx="68" cy="90" r="4" fill="#2c2c2c"/>
-        </svg>
+    <div class="back-figure">
+      <svg class="avatar-view" id="visitor-home-avatar" viewBox="0 0 80 110">
+        <ellipse cx="40" cy="22" rx="16" ry="16" fill="#ffc9b0"/>
+        <path d="M24 38 L20 85 L60 85 L56 38 Z" fill="#7fb8e8"/>
+      </svg>
+      <br>
+      <button class="personal-btn" onclick="goVisitorPersonal()">Personal Center</button>
     </div>
+  </div>
+</div>
 
-    <div class="mascot m5">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="50" cy="75" rx="18" ry="10" fill="#e8d5c4"/>
-            <circle cx="50" cy="42" r="26" fill="#2c2c2c"/>
-            <path d="M28 32 Q34 20 50 18 Q66 20 72 32" fill="#2c2c2c"/>
-            <circle cx="40" cy="44" r="5" fill="#fff"/>
-            <circle cx="60" cy="44" r="5" fill="#fff"/>
-            <circle cx="41" cy="45" r="2.5" fill="#111"/>
-            <circle cx="61" cy="45" r="2.5" fill="#111"/>
-            <path d="M44 54 Q50 58 56 54" stroke="#111" stroke-width="1.5" fill="none"/>
-            <circle cx="30" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
-            <circle cx="70" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
-            <path d="M34 70 L32 88 L42 90 L46 74 Z" fill="#6a8f4e"/>
-            <path d="M66 70 L68 88 L58 90 L54 74 Z" fill="#6a8f4e"/>
-            <circle cx="32" cy="90" r="4" fill="#2c2c2c"/>
-            <circle cx="68" cy="90" r="4" fill="#2c2c2c"/>
-        </svg>
+<!-- Page2: Stall List -->
+<div class="page" id="page-stall-list">
+  <div class="stall-list-page">
+    <h2 id="stall-list-title">Drawing World Shops</h2>
+    <div class="stall-wrap" id="stall-container">
+      <!-- Generate stalls by JS -->
     </div>
+  </div>
+</div>
 
-    <div class="mascot m6">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="50" cy="75" rx="18" ry="10" fill="#e8d5c4"/>
-            <circle cx="50" cy="42" r="26" fill="#6b4a3b"/>
-            <path d="M28 30 Q34 18 50 16 Q66 18 72 30" fill="#6b4a3b"/>
-            <circle cx="40" cy="44" r="5" fill="#fff"/>
-            <circle cx="60" cy="44" r="5" fill="#fff"/>
-            <circle cx="41" cy="45" r="2.5" fill="#111"/>
-            <circle cx="61" cy="45" r="2.5" fill="#111"/>
-            <path d="M44 54 Q50 58 56 54" stroke="#111" stroke-width="1.5" fill="none"/>
-            <circle cx="30" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
-            <circle cx="70" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
-            <path d="M34 70 L32 88 L42 90 L46 74 Z" fill="#8f6b4a"/>
-            <path d="M66 70 L68 88 L58 90 L54 74 Z" fill="#8f6b4a"/>
-            <circle cx="32" cy="90" r="4" fill="#2c2c2c"/>
-            <circle cx="68" cy="90" r="4" fill="#2c2c2c"/>
-        </svg>
+<!-- Page3: Single Creator Shop (Visitor View, Carousel) -->
+<div class="page" id="page-creator-shop">
+  <div class="creator-shop-page">
+    <h2 id="shop-name">Creator’s Stall</h2>
+    <svg class="stall-avatar" id="shop-avatar" viewBox="0 0 80 110">
+      <ellipse cx="40" cy="22" rx="16" ry="16" fill="#cccccc"/>
+      <path d="M24 38 L20 85 L60 85 L56 38 Z" fill="#cccccc"/>
+    </svg>
+    <div class="carousel-wrap">
+      <button class="carousel-arrow arrow-left" onclick="carouselPrev()">‹</button>
+      <div id="carousel-img-group"></div>
+      <button class="carousel-arrow arrow-right" onclick="carouselNext()">›</button>
+      <div class="carousel-dot-group" id="carousel-dots"></div>
     </div>
-
-    <div class="mascot m7">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="50" cy="75" rx="18" ry="10" fill="#e8d5c4"/>
-            <circle cx="50" cy="42" r="26" fill="#2c2c2c"/>
-            <path d="M28 32 Q34 20 50 18 Q66 20 72 32" fill="#2c2c2c"/>
-            <circle cx="40" cy="44" r="5" fill="#fff"/>
-            <circle cx="60" cy="44" r="5" fill="#fff"/>
-            <circle cx="41" cy="45" r="2.5" fill="#111"/>
-            <circle cx="61" cy="45" r="2.5" fill="#111"/>
-            <path d="M44 54 Q50 58 56 54" stroke="#111" stroke-width="1.5" fill="none"/>
-            <circle cx="30" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
-            <circle cx="70" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
-            <path d="M34 70 L32 88 L42 90 L46 74 Z" fill="#b0a0d6"/>
-            <path d="M66 70 L68 88 L58 90 L54 74 Z" fill="#b0a0d6"/>
-            <circle cx="32" cy="90" r="4" fill="#2c2c2c"/>
-            <circle cx="68" cy="90" r="4" fill="#2c2c2c"/>
-        </svg>
+    <div class="like-row">
+      <button class="like-btn" onclick="likeStall()">❤️ Favorite</button>
+      <button class="cart-add-btn" onclick="addCart()">🛒 Add to Cart</button>
+      <button class="next-btn" onclick="nextStall()">→ Next Stall</button>
     </div>
+    <p id="shop-desc">Creator introduction</p>
+    <p id="like-count">Favorites: 0</p>
+  </div>
+</div>
 
-    <div class="mascot m8">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="50" cy="75" rx="18" ry="10" fill="#e8d5c4"/>
-            <circle cx="50" cy="42" r="26" fill="#c98a4b"/>
-            <path d="M28 30 Q34 18 50 16 Q66 18 72 30" fill="#c98a4b"/>
-            <circle cx="40" cy="44" r="5" fill="#fff"/>
-            <circle cx="60" cy="44" r="5" fill="#fff"/>
-            <circle cx="41" cy="45" r="2.5" fill="#111"/>
-            <circle cx="61" cy="45" r="2.5" fill="#111"/>
-            <path d="M44 54 Q50 58 56 54" stroke="#111" stroke-width="1.5" fill="none"/>
-            <circle cx="30" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
-            <circle cx="70" cy="52" r="3" fill="#f3c6c6" opacity="0.7"/>
-            <path d="M34 70 L32 88 L42 90 L46 74 Z" fill="#e7c47a"/>
-            <path d="M66 70 L68 88 L58 90 L54 74 Z" fill="#e7c47a"/>
-            <circle cx="32" cy="90" r="4" fill="#2c2c2c"/>
-            <circle cx="68" cy="90" r="4" fill="#2c2c2c"/>
-        </svg>
+<!-- Page4: Visitor Personal Center｜Cart, Orders, Avatar -->
+<div class="page" id="page-visitor-personal">
+  <div class="personal-page">
+    <h2>👤 Personal Center</h2>
+    <div class="avatar-editor">
+      <h4>Customize your avatar</h4>
+      <svg class="avatar-view" id="my-avatar" viewBox="0 0 80 110">
+        <ellipse cx="40" cy="22" rx="16" ry="16" fill="#ffc9b0"/>
+        <path d="M24 38 L20 85 L60 85 L56 38 Z" fill="#7fb8e8"/>
+      </svg>
+      <br>
+      <select class="style-select" id="hair-style" onchange="changeAvatar()">
+        <option value="normal">Normal Hair</option>
+        <option value="short">Short Hair</option>
+        <option value="long">Long Hair</option>
+      </select>
+      <select class="style-select" id="cloth-style" onchange="changeAvatar()">
+        <option value="dress">Dress</option>
+        <option value="shirt">Shirt & Pants</option>
+        <option value="overalls">Overalls</option>
+      </select>
+      <input type="color" id="color-skin" value="#ffc9b0" onchange="changeAvatar()"> Skin Color
+      <input type="color" id="color-cloth" value="#7fb8e8" onchange="changeAvatar()"> Clothes Color
     </div>
+    <h3>🛒 Shopping Cart</h3>
+    <div id="cart-list"></div>
+    <button class="btn" onclick="clearCart()">Clear Cart</button>
+    <button class="btn" onclick="goCheckout()">Checkout</button>
+    <h3 style="margin-top:20px;">📋 My Orders</h3>
+    <div id="order-list"></div>
+  </div>
+</div>
 
-    <div class="mascot m9">
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="50" cy="78" rx="16" ry="8" fill="#e8d5c4"/>
-            <circle cx="50" cy="40" r="24" fill="#2c2c2c"/>
-            <path d="M28 28 Q34 18 50 16 Q66 18 72 28" fill="#2c2c2c"/>
-            <circle cx="40" cy="42" r="5" fill="#fff"/>
-            <circle cx="60" cy="42" r="5" fill="#fff"/>
-            <circle cx="41" cy="43" r="2.5" fill="#111"/>
-            <circle cx="61" cy="43" r="2.5" fill="#111"/>
-            <path d="M44 52 Q50 56 56 52" stroke="#111" stroke-width="1.5" fill="none"/>
-            <circle cx="30" cy="50" r="3" fill="#f3c6c6" opacity="0.7"/>
-            <circle cx="70" cy="50" r="3" fill="#f3c6c6" opacity="0.7"/>
-            <path d="M34 68 L32 88 L42 90 L46 72 Z" fill="#9db4e0"/>
-            <path d="M66 68 L68 88 L58 90 L54 72 Z" fill="#9db4e0"/>
-            <circle cx="32" cy="90" r="4" fill="#2c2c2c"/>
-            <circle cx="68" cy="90" r="4" fill="#2c2c2c"/>
-        </svg>
+<!-- Page5: Creator Home -->
+<div class="page" id="page-creator-home">
+  <div class="creator-home">
+    <div class="creator-menu-card" onclick="goRanking()">
+      <h3>🏆 Ranking List</h3>
+      <p>View creator rankings</p>
     </div>
-
-    <header>
-        <h1>Paper Cut Art</h1>
-        <p>Handcrafted Paper Creations | Artworks by our students</p>
-    </header>
-
-    <nav>
-        <a href="#works">Artworks</a>
-        <a href="#cart">Cart</a>
-        <a href="#checkout">Checkout</a>
-        <a href="#faq">FAQ</a>
-    </nav>
-
-    <div class="container">
-        <section id="works">
-            <h2 class="section-title">Artwork Gallery</h2>
-
-            <div class="filter-wrap">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="original">Original Art</button>
-                <button class="filter-btn" data-filter="print">Art Print</button>
-                <button class="filter-btn" data-filter="commission">Custom Commission</button>
-            </div>
-
-            <div class="works-grid">
-                <div class="work-card" data-category="original">
-                    <img class="work-img" src="https://picsum.photos/id/237/600/400" alt="Forest Paper Cut">
-                    <div class="work-info">
-                        <h3>Forest Dream</h3>
-                        <p class="desc">Hand-cut layered paper art. Framed original piece, one of a kind.</p>
-                        <p class="price">HK$ 380</p>
-                        <button class="btn add-cart" data-name="Forest Dream" data-price="380">Add to Cart</button>
-                    </div>
-                </div>
-
-                <div class="work-card" data-category="original">
-                    <img class="work-img" src="https://picsum.photos/id/10/600/400" alt="City Paper Cut">
-                    <div class="work-info">
-                        <h3>Night City</h3>
-                        <p class="desc">Multi-layer paper cut artwork. Includes custom shadow box frame.</p>
-                        <p class="price">HK$ 450</p>
-                        <button class="btn add-cart" data-name="Night City" data-price="450">Add to Cart</button>
-                    </div>
-                </div>
-
-                <div class="work-card" data-category="print">
-                    <img class="work-img" src="https://picsum.photos/id/15/600/400" alt="Flora Paper Cut">
-                    <div class="work-info">
-                        <h3>Wild Flora Print</h3>
-                        <p class="desc">High quality print of botanical paper cut. Signed limited edition.</p>
-                        <p class="price">HK$ 180</p>
-                        <button class="btn add-cart" data-name="Wild Flora Print" data-price="180">Add to Cart</button>
-                    </div>
-                </div>
-
-                <div class="work-card" data-category="commission">
-                    <img class="work-img" src="https://picsum.photos/id/24/600/400" alt="Custom Paper Cut">
-                    <div class="work-info">
-                        <h3>Custom Paper Cut Commission</h3>
-                        <p class="desc">Personalised handmade paper cut. Price depends on complexity & size.</p>
-                        <p class="price">HK$ 800 starting</p>
-                        <button class="btn add-cart" data-name="Custom Paper Cut Commission" data-price="800">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="cart">
-            <h2 class="section-title">Shopping Cart</h2>
-            <div id="cart-list"></div>
-            <p style="margin-top:1rem;"><strong>Total: HK$ <span id="total-price">0</span></strong></p>
-            <button class="btn" onclick="clearCart()" style="width:auto; margin-top:1rem;">Clear Cart</button>
-        </section>
-
-        <section id="checkout">
-            <h2 class="section-title">Place Your Order</h2>
-
-            <form id="order-form" action="https://formspree.io/f/xxxxxx" method="POST">
-                <div class="form-item">
-                    <label>Full Name</label>
-                    <input type="text" name="name" required>
-                </div>
-
-                <div class="form-item">
-                    <label>Email / Telegram</label>
-                    <input type="text" name="contact" required>
-                </div>
-
-                <div class="form-item">
-                    <label>Shipping Address</label>
-                    <textarea rows="3" name="address"></textarea>
-                </div>
-
-                <div class="form-item">
-                    <label>Notes (Special requests)</label>
-                    <textarea rows="3" name="note"></textarea>
-                </div>
-
-                <input type="hidden" id="cart-data" name="cart">
-                <input type="hidden" id="cart-total" name="total">
-
-                <button type="submit" class="btn">Submit Order</button>
-            </form>
-
-            <div class="payment-info" id="paymentPanel">
-                <h3 style="margin-bottom:0.6rem;">Order Submitted. Please Complete Payment</h3>
-                <p>Please settle payment via <strong>PayMe or FPS (HK)</strong>.</p>
-                <br>
-                <p><strong>PayMe:</strong> your-payme-here</p>
-                <p><strong>FPS ID:</strong> 12345678</p>
-                <p style="margin-top:0.8rem;">After payment, please send your transaction screenshot to us via email or Telegram for verification.</p>
-                <p>We will arrange shipment once payment is confirmed.</p>
-            </div>
-        </section>
-
-        <section id="faq">
-            <h2 class="section-title">FAQ</h2>
-
-            <div class="faq-item">
-                <div class="faq-question">What is the delivery time?</div>
-                <div class="faq-answer">Original paper cut artworks usually take 7–14 working days to finish. Prints will be shipped within 3–5 working days after payment is confirmed. Custom commissions will have a separate timeline agreed before starting.</div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">How much is shipping?</div>
-                <div class="faq-answer">Local Hong Kong shipping: HK$30. International shipping will be calculated based on destination and package weight, and quoted after the order is placed.</div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">Can I request a custom paper cut commission?</div>
-                <div class="faq-answer">Yes. Please describe your idea, size, and preferred elements in the order note. Our student artists will reply with details, a quotation, and a timeline.</div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">Return & Refund Policy</div>
-                <div class="faq-answer">Original handmade paper cuts are non-refundable unless damaged during delivery. Please provide photo proof within 3 days after receiving the parcel.</div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">Payment methods</div>
-                <div class="faq-answer">We accept PayMe and FPS (Hong Kong). Payment details will be shown after you submit your order.</div>
-            </div>
-        </section>
+    <div class="creator-menu-card" onclick="goYourStall()">
+      <h3>🏪 Your Stall</h3>
+      <p>Upload artworks & set avatar</p>
     </div>
-
-    <footer>
-        <p>© 2026 Paper Cut Art | Artworks created by students of our girls’ school. All artworks are original. Copyright reserved.</p>
-    </footer>
-
-    <div class="lightbox" id="lightbox">
-        <span class="lightbox-close">&times;</span>
-        <img id="lightbox-img" src="" alt="Artwork preview">
+    <div class="creator-menu-card" onclick="goCreatorCenter()">
+      <h3>💰 Creator Center</h3>
+      <p>Earnings & profile</p>
     </div>
+  </div>
+</div>
 
-    <script>
-        let cart = [];
-        const cartListEl = document.getElementById('cart-list');
-        const totalPriceEl = document.getElementById('total-price');
-        const paymentPanel = document.getElementById("paymentPanel");
-        const lightbox = document.getElementById("lightbox");
-        const lightboxImg = document.getElementById("lightbox-img");
+<!-- Page6: Ranking -->
+<div class="page" id="page-ranking">
+  <div style="width:min(500px,90%);margin:0 auto;padding-top:60px;">
+    <h2>🏆 Creator Ranking</h2>
+    <div id="rank-container"></div>
+  </div>
+</div>
 
-        document.querySelectorAll('.work-img').forEach(img => {
-            img.addEventListener('click', function () {
-                lightboxImg.src = this.src;
-                lightbox.style.display = "flex";
-            });
-        });
+<!-- Page7: Your Stall Management (Creator) -->
+<div class="page" id="page-your-stall">
+  <div class="stall-manage">
+    <h2>🏪 Manage Your Stall</h2>
+    <div class="upload-area">
+      <h4>Set your stall avatar</h4>
+      <svg class="stall-avatar" id="creator-stall-avatar" viewBox="0 0 80 110">
+        <ellipse cx="40" cy="22" rx="16" ry="16" fill="#cccccc"/>
+        <path d="M24 38 L20 85 L60 85 L56 38 Z" fill="#cccccc"/>
+      </svg>
+      <br>
+      <select class="style-select" id="c-hair-style" onchange="updateStallAvatar()">
+        <option value="normal">Normal Hair</option>
+        <option value="short">Short Hair</option>
+        <option value="long">Long Hair</option>
+      </select>
+      <select class="style-select" id="c-cloth-style" onchange="updateStallAvatar()">
+        <option value="dress">Dress</option>
+        <option value="shirt">Shirt & Pants</option>
+        <option value="overalls">Overalls</option>
+      </select>
+      <input type="color" id="c-skin" value="#cccccc" onchange="updateStallAvatar()"> Skin Color
+      <input type="color" id="c-cloth" value="#cccccc" onchange="updateStallAvatar()"> Clothes Color
+    </div>
+    <div class="upload-area">
+      <h4>Upload Artwork</h4>
+      <input type="file" id="art-file" accept="image/*" onchange="previewArt()">
+      <img class="preview-img" id="art-preview" src="" style="display:none;">
+      <input type="text" id="art-name" placeholder="Artwork Name">
+      <input type="text" id="art-price" placeholder="Price">
+      <button class="btn" onclick="uploadArt()">Publish Artwork</button>
+    </div>
+    <div class="upload-area">
+      <h4>Introduction</h4>
+      <input type="text" id="stall-desc" placeholder="Write your introduction">
+      <button class="btn" onclick="saveDesc()">Save Introduction</button>
+    </div>
+    <h4>Published Artworks</h4>
+    <div id="my-art-list"></div>
+  </div>
+</div>
 
-        document.querySelector('.lightbox-close').addEventListener('click', () => {
-            lightbox.style.display = "none";
-        });
+<!-- Page8: Creator Earning Center -->
+<div class="page" id="page-creator-center">
+  <div style="width:min(500px,90%);margin:0 auto;padding-top:60px;">
+    <h2>💰 Creator Center</h2>
+    <div class="earn-box">
+      <h3>Total Earnings</h3>
+      <p style="font-size:32px;color:#ff78a8" id="earn-num">$0</p>
+    </div>
+    <div class="upload-area">
+      <h4>Edit Profile</h4>
+      <input type="text" id="c-name" placeholder="Display Name">
+      <input type="text" id="c-intro" placeholder="Bio">
+      <button class="btn" onclick="saveCreatorInfo()">Save</button>
+    </div>
+  </div>
+</div>
 
-        lightbox.addEventListener('click', function (e) {
-            if (e.target === lightbox) lightbox.style.display = "none";
-        });
+<!-- Page9: Checkout Page -->
+<div class="page" id="page-checkout">
+  <div class="checkout-form">
+    <h2>✅ Checkout</h2>
+    <div id="checkout-items"></div>
+    <input type="text" id="ship-address" placeholder="Shipping Address">
+    <input type="text" id="pay-method" placeholder="Payment Method: FPS / Bank Transfer / Credit Card">
+    <button class="btn" onclick="submitOrder()">Submit Order</button>
+  </div>
+</div>
 
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const cards = document.querySelectorAll('.work-card');
+<script>
+// ========== Global Variables ==========
+let currentMode = "visitor";
+let currentUser = null;
+let pageStack = [];
+let currentWorld = "draw";
+let currentStallIndex = 0;
+let tempArtBase64 = "";
+let carouselIndex = 0;
+let musicOn = false;
 
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+document.getElementById("music-toggle").onclick = function(){
+  musicOn = !musicOn;
+  if(musicOn){
+    alert("BGM removed in this version");
+    this.innerText = "🔊";
+  }else{
+    this.innerText = "🔇";
+  }
+}
 
-                const filterVal = btn.dataset.filter;
-                cards.forEach(card => {
-                    card.style.display = (filterVal === 'all' || card.dataset.category === filterVal)
-                        ? "block"
-                        : "none";
-                });
-            });
-        });
+// Local Storage Init
+function initStorage(){
+  if(!localStorage.getItem("accs")) localStorage.setItem("accs", JSON.stringify([]));
+  if(!localStorage.getItem("stalls")) localStorage.setItem("stalls", JSON.stringify([]));
+  if(!localStorage.getItem("orders")) localStorage.setItem("orders", JSON.stringify([]));
+}
+initStorage();
+function getAccs(){ return JSON.parse(localStorage.getItem("accs")); }
+function setAccs(d){ localStorage.setItem("accs", JSON.stringify(d)); }
+function getStalls(){ return JSON.parse(localStorage.getItem("stalls")); }
+function setStalls(d){ localStorage.setItem("stalls", JSON.stringify(d)); }
+function getOrders(){ return JSON.parse(localStorage.getItem("orders")); }
+function setOrders(d){ localStorage.setItem("orders", JSON.stringify(d)); }
 
-        document.querySelectorAll('.add-cart').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const name = btn.dataset.name;
-                const price = Number(btn.dataset.price);
-                cart.push({ name, price });
-                renderCart();
-                alert(`${name} added to cart`);
-            });
-        });
+// Page Switch
+function goPage(pageId){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(pageId).classList.add("active");
+  const backBtn = document.getElementById("global-back");
+  if(pageId === "page-choose" || pageId === "page-visitor-home" || pageId === "page-creator-home"){
+    backBtn.style.display = "none";
+    pageStack = [];
+  }else{
+    backBtn.style.display = "block";
+  }
+}
+document.getElementById("global-back").onclick = function(){
+  if(pageStack.length>0){
+    const last = pageStack.pop();
+    goPage(last);
+  }else{
+    goPage(currentMode==='visitor'?'page-visitor-home':'page-creator-home');
+  }
+}
+function pushPage(pageId){
+  pageStack.push(pageId);
+  goPage(pageId);
+}
 
-        function renderCart() {
-            cartListEl.innerHTML = "";
-            let total = 0;
+// Switch Mode visitor / creator
+function switchMode(mode){
+  currentMode = mode;
+  document.getElementById("form-title").innerText = mode==="visitor"? "Visitor Login" : "Creator Login";
+}
 
-            cart.forEach(item => {
-                total += item.price;
-                const div = document.createElement('div');
-                div.className = "cart-item";
-                div.innerHTML = `<span>${item.name}</span><span>HK$ ${item.price}</span>`;
-                cartListEl.appendChild(div);
-            });
+// Login
+function doLogin(){
+  const email = document.getElementById("input-email").value.trim();
+  const pwd = document.getElementById("input-pwd").value.trim();
+  const accs = getAccs();
+  const u = accs.find(x=>x.email===email && x.pwd===pwd && x.type===currentMode);
+  if(!u){
+    alert("Wrong email, password or account type");
+    return;
+  }
+  currentUser = u;
+  if(currentMode==="visitor"){
+    pushPage("page-visitor-home");
+    renderVisitorHomeAvatar();
+  }else{
+    pushPage("page-creator-home");
+  }
+}
+// Register
+function doRegister(){
+  const email = document.getElementById("input-email").value.trim();
+  const pwd = document.getElementById("input-pwd").value.trim();
+  if(!email || !pwd){ alert("Please fill in Email and Password"); return; }
+  const accs = getAccs();
+  const exist = accs.find(x=>x.email===email && x.type===currentMode);
+  if(exist){ alert("This email is already registered for this account type"); return; }
+  const newUser = {
+    email, pwd, type:currentMode,
+    name:"New User", intro:"",
+    skin:"#ffc9b0", cloth:"#7fb8e8",
+    hairStyle:"normal", clothStyle:"dress",
+    cart:[], orders:[],
+    earn:0, artList:[], stallDesc:""
+  };
+  accs.push(newUser);
+  setAccs(accs);
+  if(currentMode==="creator"){
+    const stalls = getStalls();
+    stalls.push({
+      owner:email,
+      name:newUser.name,
+      desc:"",
+      skin:"#cccccc", cloth:"#cccccc",
+      hairStyle:"normal", clothStyle:"dress",
+      art:[], like:0, buy:0, likedBy:[]
+    });
+    setStalls(stalls);
+  }
+  alert("Register successful! You can log in now");
+}
 
-            totalPriceEl.innerText = total;
-            document.getElementById("cart-data").value = JSON.stringify(cart);
-            document.getElementById("cart-total").value = total;
-        }
+// ========== Avatar SVG Generator ==========
+function buildAvatarSVG(skin, cloth, hairStyle, clothStyle){
+  let hairPath = "";
+  if(hairStyle === "short"){
+    hairPath = `<path d="M22 10 Q40 2 58 10 L56 24 Q40 18 24 24 Z" fill="#444"/>`;
+  }else if(hairStyle === "long"){
+    hairPath = `<path d="M20 12 Q40 0 60 12 L64 45 Q40 38 16 45 Z" fill="#444"/>`;
+  }else{
+    hairPath = `<path d="M24 14 Q40 6 56 14 L54 26 Q40 22 26 26 Z" fill="#444"/>`;
+  }
+  let bodyPath = "";
+  if(clothStyle === "shirt"){
+    bodyPath = `<path d="M26 38 L20 85 L60 85 L54 38 Z" fill="${cloth}"/>
+    <path d="M28 38 L40 48 L52 38" fill="none" stroke="#fff4" stroke-width="2"/>`;
+  }else if(clothStyle === "overalls"){
+    bodyPath = `<path d="M26 38 L22 85 L58 85 L54 38 Z" fill="${cloth}"/>
+    <rect x="30" y="38" width="20" height="22" rx="3" fill="none" stroke="#fff4" stroke-width="2"/>`;
+  }else{
+    bodyPath = `<path d="M24 38 L20 85 L60 85 L56 38 Z" fill="${cloth}"/>`;
+  }
+  return `
+    <svg viewBox="0 0 80 110">
+      ${hairPath}
+      <ellipse cx="40" cy="22" rx="16" ry="16" fill="${skin}"/>
+      ${bodyPath}
+    </svg>
+  `;
+}
+function renderVisitorHomeAvatar(){
+  document.getElementById("visitor-home-avatar").outerHTML = buildAvatarSVG(currentUser.skin, currentUser.cloth, currentUser.hairStyle, currentUser.clothStyle);
+}
+function changeAvatar(){
+  const sk = document.getElementById("color-skin").value;
+  const cl = document.getElementById("color-cloth").value;
+  const hs = document.getElementById("hair-style").value;
+  const cs = document.getElementById("cloth-style").value;
+  document.getElementById("my-avatar").outerHTML = buildAvatarSVG(sk, cl, hs, cs);
+  currentUser.skin = sk; currentUser.cloth = cl;
+  currentUser.hairStyle = hs; currentUser.clothStyle = cs;
+  const accs = getAccs();
+  const u = accs.find(x=>x.email===currentUser.email);
+  u.skin = sk; u.cloth = cl;
+  u.hairStyle = hs; u.clothStyle = cs;
+  setAccs(accs);
+  renderVisitorHomeAvatar();
+}
 
-        function clearCart() {
-            cart = [];
-            renderCart();
-        }
+// ========== Visitor Flow ==========
+function openWorld(w){
+  currentWorld = w;
+  document.getElementById("stall-list-title").innerText = w==="draw"? "Drawing World Shops":"Craft World Shops";
+  renderStallList();
+  pushPage("page-stall-list");
+}
+function renderStallList(){
+  const wrap = document.getElementById("stall-container");
+  wrap.innerHTML = "";
+  const stalls = getStalls();
+  stalls.forEach((s,idx)=>{
+    const div = document.createElement("div");
+    div.className="stall-card";
+    let artHtml = `<div class="stall-art">No artwork yet</div>`;
+    if(s.art.length>0 && s.art[0].img){
+      artHtml = `<div class="stall-art"><img src="${s.art[0].img}"></div>`;
+    }
+    div.innerHTML = `
+      ${buildAvatarSVG(s.skin, s.cloth, s.hairStyle, s.clothStyle)}
+      ${artHtml}
+      <p>${s.name}</p>
+      <p>❤️ ${s.like} | 🛒 ${s.buy}</p>
+    `;
+    div.onclick = ()=> openStall(idx);
+    wrap.appendChild(div);
+  })
+}
+function openStall(idx){
+  currentStallIndex = idx;
+  carouselIndex = 0;
+  const s = getStalls()[idx];
+  document.getElementById("shop-name").innerText = s.name;
+  document.getElementById("shop-desc").innerText = s.desc || "This creator has not written an introduction";
+  document.getElementById("shop-avatar").outerHTML = buildAvatarSVG(s.skin, s.cloth, s.hairStyle, s.clothStyle);
+  document.getElementById("like-count").innerText = `Favorites: ${s.like}`;
+  renderCarousel(s.art);
+  pushPage("page-creator-shop");
+}
+function renderCarousel(artList){
+  const imgGroup = document.getElementById("carousel-img-group");
+  const dotGroup = document.getElementById("carousel-dots");
+  imgGroup.innerHTML = "";
+  dotGroup.innerHTML = "";
+  if(artList.length ===0){
+    imgGroup.innerHTML = `<span style="display:flex;align-items:center;justify-content:center;height:100%;">No artwork yet</span>`;
+    return;
+  }
+  artList.forEach((art,i)=>{
+    const img = document.createElement("img");
+    img.className = "carousel-img" + (i===0 ? " active":"");
+    img.src = art.img;
+    imgGroup.appendChild(img);
+    const dot = document.createElement("span");
+    dot.className = "carousel-dot" + (i===0 ? " active":"");
+    dot.onclick = ()=>{carouselIndex = i; updateCarousel();};
+    dotGroup.appendChild(dot);
+  })
+}
+function updateCarousel(){
+  const imgs = document.querySelectorAll(".carousel-img");
+  const dots = document.querySelectorAll(".carousel-dot");
+  imgs.forEach((el,i)=>el.classList.toggle("active", i===carouselIndex));
+  dots.forEach((el,i)=>el.classList.toggle("active", i===carouselIndex));
+}
+function carouselNext(){
+  const s = getStalls()[currentStallIndex];
+  if(s.art.length ===0) return;
+  carouselIndex = (carouselIndex + 1) % s.art.length;
+  updateCarousel();
+}
+function carouselPrev(){
+  const s = getStalls()[currentStallIndex];
+  if(s.art.length ===0) return;
+  carouselIndex = (carouselIndex -1 + s.art.length) % s.art.length;
+  updateCarousel();
+}
+function nextStall(){
+  const stalls = getStalls();
+  currentStallIndex++;
+  if(currentStallIndex >= stalls.length) currentStallIndex = 0;
+  openStall(currentStallIndex);
+}
+function likeStall(){
+  const stalls = getStalls();
+  const stall = stalls[currentStallIndex];
+  if(stall.likedBy.includes(currentUser.email)){
+    alert("You have already favorited this stall");
+    return;
+  }
+  stall.likedBy.push(currentUser.email);
+  stall.like += 1;
+  setStalls(stalls);
+  openStall(currentStallIndex);
+  alert("✅ Favorited successfully!");
+}
+function addCart(){
+  const stalls = getStalls();
+  const stall = stalls[currentStallIndex];
+  if(!stall.art[carouselIndex]){ alert("No artwork to add to cart"); return; }
+  const selectedArt = stall.art[carouselIndex];
+  currentUser.cart.push({
+    stallIdx: currentStallIndex,
+    artName: selectedArt.name,
+    price: selectedArt.price,
+    img: selectedArt.img,
+    owner: stall.owner
+  });
+  const accs = getAccs();
+  const u = accs.find(x=>x.email === currentUser.email);
+  u.cart = currentUser.cart;
+  setAccs(accs);
+  alert("✅ Added to cart");
+}
+function goVisitorPersonal(){
+  renderCart();
+  renderOrder();
+  pushPage("page-visitor-personal");
+}
+function renderCart(){
+  const c = document.getElementById("cart-list");
+  c.innerHTML = "";
+  currentUser.cart.forEach((item,i)=>{
+    c.innerHTML += `
+      <div class="cart-item">
+        <span>${item.artName} - $${item.price}</span>
+      </div>
+    `;
+  })
+}
+function clearCart(){
+  currentUser.cart = [];
+  const accs = getAccs();
+  const u = accs.find(x=>x.email === currentUser.email);
+  u.cart = [];
+  setAccs(accs);
+  renderCart();
+  alert("Cart cleared");
+}
+function goCheckout(){
+  if(currentUser.cart.length===0){ alert("Your cart is empty"); return; }
+  const ck = document.getElementById("checkout-items");
+  ck.innerHTML = "";
+  let total = 0;
+  currentUser.cart.forEach(it=>{
+    ck.innerHTML += `<div class="order-item">${it.artName} $${it.price}</div>`;
+    total += Number(it.price);
+  })
+  ck.innerHTML += `<p><b>Total: $${total}</b></p>`;
+  pushPage("page-checkout");
+}
+function submitOrder(){
+  const addr = document.getElementById("ship-address").value.trim();
+  const pay = document.getElementById("pay-method").value.trim();
+  if(!addr || !pay){ alert("Please fill in address and payment method"); return; }
+  const newOrder = {
+    items: [...currentUser.cart],
+    address:addr, pay:pay, time:new Date().toLocaleString()
+  };
+  currentUser.orders.push(newOrder);
+  const stalls = getStalls();
+  currentUser.cart.forEach(it=>{
+    stalls[it.stallIdx].buy +=1;
+    const accs = getAccs();
+    const cr = accs.find(x=>x.email === it.owner);
+    if(cr) cr.earn += Number(it.price);
+    setAccs(accs);
+  })
+  setStalls(stalls);
+  currentUser.cart = [];
+  const accs = getAccs();
+  const u = accs.find(x=>x.email === currentUser.email);
+  u.orders = currentUser.orders;
+  u.cart = [];
+  setAccs(accs);
+  alert("🎉 Order submitted successfully!");
+  goVisitorPersonal();
+}
+function renderOrder(){
+  const o = document.getElementById("order-list");
+  o.innerHTML = "";
+  currentUser.orders.forEach(ord=>{
+    o.innerHTML += `<div class="order-item">${ord.time}｜${ord.pay}｜${ord.address}</div>`;
+  })
+}
 
-        document.getElementById('order-form').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const form = this;
-
-            fetch(form.action, {
-                method: form.method,
-                body: new FormData(form),
-                headers: { 'Accept': 'application/json' }
-            }).then(response => {
-                if (response.ok) {
-                    paymentPanel.style.display = "block";
-                    form.reset();
-                    clearCart();
-                }
-            }).catch(() => {
-                alert("Order failed. Please try again or contact us directly.");
-            });
-        });
-
-        document.querySelectorAll('.faq-question').forEach(q => {
-            q.addEventListener('click', () => {
-                q.classList.toggle('open');
-                q.nextElementSibling.style.display =
-                    q.nextElementSibling.style.display === "block" ? "none" : "block";
-            });
-        });
-    </script>
+// ========== Creator Flow ==========
+function goRanking(){
+  renderRank();
+  pushPage("page-ranking");
+}
+function renderRank(){
+  const wrap = document.getElementById("rank-container");
+  wrap.innerHTML = "";
+  const stalls = getStalls();
+  const sorted = [...stalls].sort((a,b)=>(b.like+b.buy)-(a.like+a.buy));
+  sorted.forEach((s,idx)=>{
+    wrap.innerHTML += `
+      <div class="rank-item">
+        <b>${idx+1}</b>
+        ${buildAvatarSVG(s.skin, s.cloth, s.hairStyle, s.clothStyle)}
+        <div>
+          <p>${s.name}</p>
+          <p>❤️${s.like} 🛒${s.buy}</p>
+        </div>
+      </div>
+    `;
+  })
+}
+function goYourStall(){
+  loadStallSetting();
+  pushPage("page-your-stall");
+}
+function loadStallSetting(){
+  const stalls = getStalls();
+  const s = stalls.find(x=>x.owner === currentUser.email);
+  if(!s) return;
+  document.getElementById("c-skin").value = s.skin;
+  document.getElementById("c-cloth").value = s.cloth;
+  document.getElementById("c-hair-style").value = s.hairStyle;
+  document.getElementById("c-cloth-style").value = s.clothStyle;
+  document.getElementById("stall-desc").value = s.desc;
+  document.getElementById("creator-stall-avatar").outerHTML = buildAvatarSVG(s.skin, s.cloth, s.hairStyle, s.clothStyle);
+  let artHtml = "";
+  s.art.forEach(a=> {
+    artHtml += `<div class="order-item">${a.name} $${a.price}</div>`;
+  });
+  document.getElementById("my-art-list").innerHTML = artHtml || "<p>No artwork yet</p>";
+}
+function updateStallAvatar(){
+  const sk = document.getElementById("c-skin").value;
+  const cl = document.getElementById("c-cloth").value;
+  const hs = document.getElementById("c-hair-style").value;
+  const cs = document.getElementById("c-cloth-style").value;
+  document.getElementById("creator-stall-avatar").outerHTML = buildAvatarSVG(sk, cl, hs, cs);
+  const stalls = getStalls();
+  const s = stalls.find(x=>x.owner === currentUser.email);
+  s.skin = sk; s.cloth = cl;
+  s.hairStyle = hs; s.clothStyle = cs;
+  setStalls(stalls);
+}
+function saveDesc(){
+  const d = document.getElementById("stall-desc").value.trim();
+  const stalls = getStalls();
+  const s = stalls.find(x=>x.owner === currentUser.email);
+  s.desc = d;
+  setStalls(stalls);
+  alert("Introduction saved");
+}
+function previewArt(){
+  const fileInput = document.getElementById("art-file");
+  const previewDom = document.getElementById("art-preview");
+  if(!fileInput.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    tempArtBase64 = e.target.result;
+    previewDom.src = tempArtBase64;
+    previewDom.style.display = "block";
+  }
+  reader.readAsDataURL(fileInput.files[0]);
+}
+function uploadArt(){
+  const name = document.getElementById("art-name").value.trim();
+  const price = document.getElementById("art-price").value.trim();
+  if(!name || !price){ alert("Fill artwork name and price"); return; }
+  const stalls = getStalls();
+  const s = stalls.find(x=>x.owner === currentUser.email);
+  s.art.push({name, price, img: tempArtBase64});
+  setStalls(stalls);
+  loadStallSetting();
+  document.getElementById("art-preview").style.display = "none";
+  tempArtBase64 = "";
+  document.getElementById("art-name").value = "";
+  document.getElementById("art-price").value = "";
+  alert("Artwork published successfully!");
+}
+function goCreatorCenter(){
+  document.getElementById("earn-num").innerText = "$"+currentUser.earn;
+  document.getElementById("c-name").value = currentUser.name;
+  document.getElementById("c-intro").value = currentUser.intro;
+  pushPage("page-creator-center");
+}
+function saveCreatorInfo(){
+  const n = document.getElementById("c-name").value.trim();
+  const i = document.getElementById("c-intro").value.trim();
+  currentUser.name = n; currentUser.intro = i;
+  const accs = getAccs();
+  const u = accs.find(x=>x.email === currentUser.email);
+  u.name = n; u.intro = i;
+  setAccs(accs);
+  const stalls = getStalls();
+  const s = stalls.find(x=>x.owner === currentUser.email);
+  s.name = n;
+  setStalls(stalls);
+  alert("Profile saved");
+}
+</script>
 </body>
 </html>
