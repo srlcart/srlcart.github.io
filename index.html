@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Art World Shop｜Fixed Register Version</title>
+<title>Art World Shop｜Final Fixed Version</title>
 <style>
 *{
   margin:0;
@@ -462,8 +462,8 @@ input:focus{
 </head>
 <body>
 
-<button class="music-btn" id="music-toggle">🔇</button>
-<button class="back-btn" id="global-back" style="display:none;">←</button>
+<button type="button" class="music-btn" id="music-toggle">🔇</button>
+<button type="button" class="back-btn" id="global-back" style="display:none;">←</button>
 
 <div class="page active" id="page-choose">
   <h1 class="title">🎨 Art World Shop</h1>
@@ -481,8 +481,8 @@ input:focus{
     <h4 id="form-title">Visitor Login</h4>
     <input type="email" id="input-email" placeholder="Enter Email">
     <input type="password" id="input-pwd" placeholder="Password">
-    <button class="btn" onclick="doLogin()">Login</button>
-    <button class="btn btn-gray" onclick="doRegister()">Register New Account</button>
+    <button type="button" class="btn" onclick="doLogin()">Login</button>
+    <button type="button" class="btn btn-gray" onclick="doRegister()">Register New Account</button>
   </div>
 </div>
 
@@ -492,11 +492,11 @@ input:focus{
     <div class="world-container">
       <div class="world-card world-draw" onclick="openWorld('draw')">
         Drawing World
-        <button class="start-btn">Start!</button>
+        <button type="button" class="start-btn">Start!</button>
       </div>
       <div class="world-card world-craft" onclick="openWorld('craft')">
         Craft World
-        <button class="start-btn">Start!</button>
+        <button type="button" class="start-btn">Start!</button>
       </div>
     </div>
     <div class="back-figure">
@@ -505,7 +505,7 @@ input:focus{
         <path d="M24 38 L20 85 L60 85 L56 38 Z" fill="#7fb8e8"/>
       </svg>
       <br>
-      <button class="personal-btn" onclick="goVisitorPersonal()">Personal Center</button>
+      <button type="button" class="personal-btn" onclick="goVisitorPersonal()">Personal Center</button>
     </div>
   </div>
 </div>
@@ -525,15 +525,15 @@ input:focus{
       <path d="M24 38 L20 85 L60 85 L56 38 Z" fill="#cccccc"/>
     </svg>
     <div class="carousel-wrap">
-      <button class="carousel-arrow arrow-left" onclick="carouselPrev()">‹</button>
+      <button type="button" class="carousel-arrow arrow-left" onclick="carouselPrev()">‹</button>
       <div id="carousel-img-group"></div>
-      <button class="carousel-arrow arrow-right" onclick="carouselNext()">›</button>
+      <button type="button" class="carousel-arrow arrow-right" onclick="carouselNext()">›</button>
       <div class="carousel-dot-group" id="carousel-dots"></div>
     </div>
     <div class="like-row">
-      <button class="like-btn" onclick="likeStall()">❤️ Favorite</button>
-      <button class="cart-add-btn" onclick="addCart()">🛒 Add to Cart</button>
-      <button class="next-btn" onclick="nextStall()">→ Next Stall</button>
+      <button type="button" class="like-btn" onclick="likeStall()">❤️ Favorite</button>
+      <button type="button" class="cart-add-btn" onclick="addCart()">🛒 Add to Cart</button>
+      <button type="button" class="next-btn" onclick="nextStall()">→ Next Stall</button>
     </div>
     <p id="shop-desc">Creator introduction</p>
     <p id="like-count">Favorites: 0</p>
@@ -565,8 +565,8 @@ input:focus{
     </div>
     <h3>🛒 Shopping Cart</h3>
     <div id="cart-list"></div>
-    <button class="btn" onclick="clearCart()">Clear Cart</button>
-    <button class="btn" onclick="goCheckout()">Checkout</button>
+    <button type="button" class="btn" onclick="clearCart()">Clear Cart</button>
+    <button type="button" class="btn" onclick="goCheckout()">Checkout</button>
     <h3 style="margin-top:20px;">📋 My Orders</h3>
     <div id="order-list"></div>
   </div>
@@ -625,12 +625,12 @@ input:focus{
       <img class="preview-img" id="art-preview" src="" style="display:none;">
       <input type="text" id="art-name" placeholder="Artwork Name">
       <input type="text" id="art-price" placeholder="Price">
-      <button class="btn" onclick="uploadArt()">Publish Artwork</button>
+      <button type="button" class="btn" onclick="uploadArt()">Publish Artwork</button>
     </div>
     <div class="upload-area">
       <h4>Introduction</h4>
       <input type="text" id="stall-desc" placeholder="Write your introduction">
-      <button class="btn" onclick="saveDesc()">Save Introduction</button>
+      <button type="button" class="btn" onclick="saveDesc()">Save Introduction</button>
     </div>
     <h4>Published Artworks</h4>
     <div id="my-art-list"></div>
@@ -648,7 +648,7 @@ input:focus{
       <h4>Edit Profile</h4>
       <input type="text" id="c-name" placeholder="Display Name">
       <input type="text" id="c-intro" placeholder="Bio">
-      <button class="btn" onclick="saveCreatorInfo()">Save</button>
+      <button type="button" class="btn" onclick="saveCreatorInfo()">Save</button>
     </div>
   </div>
 </div>
@@ -659,7 +659,7 @@ input:focus{
     <div id="checkout-items"></div>
     <input type="text" id="ship-address" placeholder="Shipping Address">
     <input type="text" id="pay-method" placeholder="Payment Method: FPS / Bank Transfer / Credit Card">
-    <button class="btn" onclick="submitOrder()">Submit Order</button>
+    <button type="button" class="btn" onclick="submitOrder()">Submit Order</button>
   </div>
 </div>
 
