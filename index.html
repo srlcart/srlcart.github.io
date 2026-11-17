@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Art World Shop｜Final Version</title>
+<title>Art World Shop｜Fixed Register Version</title>
 <style>
 *{
   margin:0;
@@ -65,7 +65,6 @@ body{
 .music-btn:hover{
   transform:scale(1.1);
 }
-/* Login Choose Page */
 #page-choose{
   display:flex;
   flex-direction:column;
@@ -144,8 +143,6 @@ input:focus{
 .btn-gray:hover{
   background:#bbbbbb;
 }
-
-/* Visitor Home: Drawing / Craft Blocks */
 .visitor-home{
   display:flex;
   flex-direction:column;
@@ -220,8 +217,6 @@ input:focus{
 .personal-btn:hover{
   transform:scale(1.05);
 }
-
-/* Stall List Page */
 .stall-list-page{
   padding-top:60px;
 }
@@ -264,8 +259,6 @@ input:focus{
   object-fit:cover;
   border-radius:12px;
 }
-
-/* Creator Shop Page (Visitor View)｜Carousel */
 .creator-shop-page{
   padding-top:60px;
   display:flex;
@@ -368,8 +361,6 @@ input:focus{
 .next-btn:hover{
   transform:scale(1.05);
 }
-
-/* Visitor Personal Page */
 .personal-page{
   padding-top:60px;
   width:min(500px,90%);
@@ -397,8 +388,6 @@ input:focus{
   border-radius:10px;
   border:2px solid #ffd6e2;
 }
-
-/* Creator Home */
 .creator-home{
   padding-top:60px;
   display:flex;
@@ -419,8 +408,6 @@ input:focus{
 .creator-menu-card:hover{
   transform:translateY(-4px);
 }
-
-/* Ranking Page */
 .rank-item{
   background:white;
   padding:14px;
@@ -434,8 +421,6 @@ input:focus{
   width:60px;
   height:70px;
 }
-
-/* Stall Management (Creator) */
 .stall-manage{
   width:min(500px,90%);
   margin:0 auto;
@@ -455,8 +440,6 @@ input:focus{
   border-radius:12px;
   background:#eee;
 }
-
-/* Creator Earning Center */
 .earn-box{
   background:white;
   padding:24px;
@@ -464,8 +447,6 @@ input:focus{
   text-align:center;
   margin-top:20px;
 }
-
-/* Checkout Page */
 .checkout-form{
   width:min(460px,90%);
   margin:0 auto;
@@ -484,7 +465,6 @@ input:focus{
 <button class="music-btn" id="music-toggle">🔇</button>
 <button class="back-btn" id="global-back" style="display:none;">←</button>
 
-<!-- Page 0: Login / Register Choose -->
 <div class="page active" id="page-choose">
   <h1 class="title">🎨 Art World Shop</h1>
   <div class="mode-box">
@@ -506,7 +486,6 @@ input:focus{
   </div>
 </div>
 
-<!-- Page1: Visitor Home -->
 <div class="page" id="page-visitor-home">
   <div class="visitor-home">
     <h2>Welcome to Art World</h2>
@@ -531,17 +510,13 @@ input:focus{
   </div>
 </div>
 
-<!-- Page2: Stall List -->
 <div class="page" id="page-stall-list">
   <div class="stall-list-page">
     <h2 id="stall-list-title">Drawing World Shops</h2>
-    <div class="stall-wrap" id="stall-container">
-      <!-- Generate stalls by JS -->
-    </div>
+    <div class="stall-wrap" id="stall-container"></div>
   </div>
 </div>
 
-<!-- Page3: Single Creator Shop (Visitor View, Carousel) -->
 <div class="page" id="page-creator-shop">
   <div class="creator-shop-page">
     <h2 id="shop-name">Creator’s Stall</h2>
@@ -565,7 +540,6 @@ input:focus{
   </div>
 </div>
 
-<!-- Page4: Visitor Personal Center｜Cart, Orders, Avatar -->
 <div class="page" id="page-visitor-personal">
   <div class="personal-page">
     <h2>👤 Personal Center</h2>
@@ -598,7 +572,6 @@ input:focus{
   </div>
 </div>
 
-<!-- Page5: Creator Home -->
 <div class="page" id="page-creator-home">
   <div class="creator-home">
     <div class="creator-menu-card" onclick="goRanking()">
@@ -616,7 +589,6 @@ input:focus{
   </div>
 </div>
 
-<!-- Page6: Ranking -->
 <div class="page" id="page-ranking">
   <div style="width:min(500px,90%);margin:0 auto;padding-top:60px;">
     <h2>🏆 Creator Ranking</h2>
@@ -624,7 +596,6 @@ input:focus{
   </div>
 </div>
 
-<!-- Page7: Your Stall Management (Creator) -->
 <div class="page" id="page-your-stall">
   <div class="stall-manage">
     <h2>🏪 Manage Your Stall</h2>
@@ -666,7 +637,6 @@ input:focus{
   </div>
 </div>
 
-<!-- Page8: Creator Earning Center -->
 <div class="page" id="page-creator-center">
   <div style="width:min(500px,90%);margin:0 auto;padding-top:60px;">
     <h2>💰 Creator Center</h2>
@@ -683,7 +653,6 @@ input:focus{
   </div>
 </div>
 
-<!-- Page9: Checkout Page -->
 <div class="page" id="page-checkout">
   <div class="checkout-form">
     <h2>✅ Checkout</h2>
@@ -695,7 +664,6 @@ input:focus{
 </div>
 
 <script>
-// ========== Global Variables ==========
 let currentMode = "visitor";
 let currentUser = null;
 let pageStack = [];
@@ -708,14 +676,13 @@ let musicOn = false;
 document.getElementById("music-toggle").onclick = function(){
   musicOn = !musicOn;
   if(musicOn){
-    alert("BGM removed in this version");
+    alert("BGM removed");
     this.innerText = "🔊";
   }else{
     this.innerText = "🔇";
   }
 }
 
-// Local Storage Init
 function initStorage(){
   if(!localStorage.getItem("accs")) localStorage.setItem("accs", JSON.stringify([]));
   if(!localStorage.getItem("stalls")) localStorage.setItem("stalls", JSON.stringify([]));
@@ -729,7 +696,6 @@ function setStalls(d){ localStorage.setItem("stalls", JSON.stringify(d)); }
 function getOrders(){ return JSON.parse(localStorage.getItem("orders")); }
 function setOrders(d){ localStorage.setItem("orders", JSON.stringify(d)); }
 
-// Page Switch
 function goPage(pageId){
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
   document.getElementById(pageId).classList.add("active");
@@ -754,13 +720,11 @@ function pushPage(pageId){
   goPage(pageId);
 }
 
-// Switch Mode visitor / creator
 function switchMode(mode){
   currentMode = mode;
   document.getElementById("form-title").innerText = mode==="visitor"? "Visitor Login" : "Creator Login";
 }
 
-// Login
 function doLogin(){
   const email = document.getElementById("input-email").value.trim();
   const pwd = document.getElementById("input-pwd").value.trim();
@@ -778,14 +742,21 @@ function doLogin(){
     pushPage("page-creator-home");
   }
 }
-// Register
+
 function doRegister(){
   const email = document.getElementById("input-email").value.trim();
   const pwd = document.getElementById("input-pwd").value.trim();
-  if(!email || !pwd){ alert("Please fill in Email and Password"); return; }
+  console.log("嘗試註冊", currentMode, email, pwd);
+  if(!email || !pwd){
+    alert("Please fill in Email and Password");
+    return;
+  }
   const accs = getAccs();
   const exist = accs.find(x=>x.email===email && x.type===currentMode);
-  if(exist){ alert("This email is already registered for this account type"); return; }
+  if(exist){
+    alert("This email is already registered for this account type");
+    return;
+  }
   const newUser = {
     email, pwd, type:currentMode,
     name:"New User", intro:"",
@@ -811,7 +782,6 @@ function doRegister(){
   alert("Register successful! You can log in now");
 }
 
-// ========== Avatar SVG Generator ==========
 function buildAvatarSVG(skin, cloth, hairStyle, clothStyle){
   let hairPath = "";
   if(hairStyle === "short"){
@@ -858,7 +828,6 @@ function changeAvatar(){
   renderVisitorHomeAvatar();
 }
 
-// ========== Visitor Flow ==========
 function openWorld(w){
   currentWorld = w;
   document.getElementById("stall-list-title").innerText = w==="draw"? "Drawing World Shops":"Craft World Shops";
@@ -1044,7 +1013,6 @@ function renderOrder(){
   })
 }
 
-// ========== Creator Flow ==========
 function goRanking(){
   renderRank();
   pushPage("page-ranking");
